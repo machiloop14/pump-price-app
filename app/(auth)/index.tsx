@@ -4,10 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   return (
     <SafeAreaView>
-      <View className="flex gap-10 items-center justify-center w-10/12 mx-auto">
+      <View className="h-full flex gap-10 items-center justify-center w-10/12 mx-auto">
         <View className="h-96 w-full">
           <Image
-            source={require("../assets/images/welcome.png")}
+            source={require("../../assets/images/welcome.png")}
             className="w-full h-full"
             resizeMode="stretch"
           />

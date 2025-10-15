@@ -1,7 +1,9 @@
+import { useRouter } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
+  const router = useRouter();
   return (
     <SafeAreaView>
       <View className="h-full flex gap-10 items-center justify-center w-10/12 mx-auto">
@@ -19,7 +21,10 @@ export default function Index() {
           </Text>
         </View>
         <View className="flex gap-4 w-full">
-          <Pressable className="bg-[#138AEC] py-4 rounded-lg">
+          <Pressable
+            className="bg-[#138AEC] py-4 rounded-lg"
+            onPress={() => router.replace("/home")}
+          >
             <Text className="text-center text-white font-bold">Log In</Text>
           </Pressable>
           <Pressable className="bg-[#111518] py-4 rounded-lg">

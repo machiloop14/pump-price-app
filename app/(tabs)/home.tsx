@@ -1,18 +1,15 @@
+import DieselTab from "@/components/dieselTab";
+import KeroseneTab from "@/components/keroseneTab";
+import PetrolTab from "@/components/petrolTab";
 import React from "react";
-import { Text, useWindowDimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
-const firstRoute = () => <Text>hello1</Text>;
-
-const secondRoute = () => <Text>hello2</Text>;
-
-const thirdRoute = () => <Text>hello3</Text>;
-
 const renderScene = SceneMap({
-  petrol: firstRoute,
-  diesel: secondRoute,
-  kerosene: thirdRoute,
+  petrol: PetrolTab,
+  kerosene: KeroseneTab,
+  diesel: DieselTab,
 });
 
 const routes = [

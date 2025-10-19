@@ -1,0 +1,98 @@
+[
+  {
+    "stationName": "TotalEnergies",
+    "location": "Bodija, Ibadan, Oyo State",
+    "prices": [
+      {
+        "fuelType": "Petrol",
+        "price": 680,
+        "reportedBy": "Adekunle J.",
+        "likes": 24,
+        "dislikes": 3,
+        "timeReported": "2025-10-17T08:42:00Z"
+      },
+      {
+        "fuelType": "Petrol",
+        "price": 680,
+        "reportedBy": "john J.",
+        "likes": 14,
+        "dislikes": 1,
+        "timeReported": "2025-10-17T08:48:00Z"
+      },
+      {
+        "fuelType": "Diesel",
+        "price": 950,
+        "reportedBy": "Chiamaka E.",
+        "likes": 10,
+        "dislikes": 1,
+        "timeReported": "2025-10-17T07:18:00Z"
+      }
+    ]
+  },
+  {
+    "stationName": "NNPC",
+    "location": "Challenge, Ibadan, Oyo State",
+    "prices": [
+      {
+        "fuelType": "Petrol",
+        "price": 670,
+        "reportedBy": "Umar A.",
+        "likes": 30,
+        "dislikes": 5,
+        "timeReported": "2025-10-16T19:30:00Z"
+      },
+      {
+        "fuelType": "Kerosene",
+        "price": 850,
+        "reportedBy": "Blessing I.",
+        "likes": 14,
+        "dislikes": 0,
+        "timeReported": "2025-10-16T17:05:00Z"
+      }
+    ]
+  },
+  {
+    "stationName": "Oando",
+    "location": "Ring Road, Ibadan, Oyo State",
+    "prices": [
+      {
+        "fuelType": "Petrol",
+        "price": 690,
+        "reportedBy": "Samuel O.",
+        "likes": 8,
+        "dislikes": 2,
+        "timeReported": "2025-10-17T06:50:00Z"
+      },
+      {
+        "fuelType": "Diesel",
+        "price": 940,
+        "reportedBy": "Ngozi K.",
+        "likes": 5,
+        "dislikes": 1,
+        "timeReported": "2025-10-16T21:22:00Z"
+      }
+    ]
+  },
+  {
+    "stationName": "MRS Petroleum",
+    "location": "Apata, Ibadan, Oyo State",
+    "prices": [
+      {
+        "fuelType": "Petrol",
+        "price": 675,
+        "reportedBy": "Femi A.",
+        "likes": 20,
+        "dislikes": 4,
+        "timeReported": "2025-10-17T09:10:00Z"
+      },
+      {
+        "fuelType": "Kerosene",
+        "price": 870,
+        "reportedBy": "Aisha M.",
+        "likes": 7,
+        "dislikes": 0,
+        "timeReported": "2025-10-16T20:12:00Z"
+      }
+    ]
+  }
+]

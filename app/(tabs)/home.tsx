@@ -32,14 +32,17 @@ const Home = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView
+      className="flex-1 px-4 bg-white"
+      edges={["top", "left", "right"]}
+    >
       <View className="relative mt-4 mb-6">
         <Text className="text-center font-bold text-2xl ">Fuel Finder</Text>
-        <View className="absolute right-4 -top-2 px-2 py-2 bg-[#DFEBF6] rounded-full">
+        <View className="absolute right-0 -top-2 px-2 py-2 bg-[#DAE5F0] rounded-full">
           <MaterialIcons name="tune" size={28} color="#007CEA" />
         </View>
       </View>
-      <View className="flex-1">
+      <View className="flex flex-1">
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}

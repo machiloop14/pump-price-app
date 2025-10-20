@@ -1,6 +1,6 @@
 import DropdownComponent from "@/components/dropdown";
 import FormInput from "@/components/formInput";
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import dummyState from "../../data/dummystate.json";
@@ -8,6 +8,16 @@ import dummyStations from "../../data/dummystations.json";
 import fueltypedata from "../../data/fueltypedata.json";
 
 const Submit = () => {
+  const [price, setPrice] = useState<string>();
+  const [location, setLocation] = useState<string>();
+
+  const handlePriceInput = (price: string) => {
+    setPrice(price);
+  };
+  const handleLocationInput = (location: string) => {
+    setLocation(location);
+  };
+
   return (
     <SafeAreaView className="bg-white flex flex-1" edges={[]}>
       <View className="pt-2 flex gap-4 px-4">
@@ -41,6 +51,7 @@ const Submit = () => {
             formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
             placeholder="N0.00"
             keyboard="decimal-pad"
+            handleFormInput={handlePriceInput}
           />
         </View>
         <View className="mb-2">
@@ -49,9 +60,16 @@ const Submit = () => {
             formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
             placeholder="agbowo, opp UI gate"
             keyboard="default"
+            handleFormInput={handleLocationInput}
           />
         </View>
-        <Pressable className="bg-[#138AEC] py-4 rounded-lg">
+        <Pressable
+          className="bg-[#138AEC] py-4 rounded-lg"
+          onPress={() => {
+            console.log(price);
+            console.log(location);
+          }}
+        >
           <Text className="text-center text-white">Submit</Text>
         </Pressable>
       </View>

@@ -3,7 +3,7 @@ import KeroseneTab from "@/components/keroseneTab";
 import PetrolTab from "@/components/petrolTab";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Text, useWindowDimensions, View } from "react-native";
+import { Image, Text, useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 
@@ -36,12 +36,22 @@ const Home = () => {
       className="flex-1 px-4 bg-white pb-2"
       edges={["top", "left", "right"]}
     >
+      {/* HEADER & FILTER BTN */}
       <View className="relative mt-4 mb-6">
         <Text className="text-center font-bold text-2xl ">Fuel Finder</Text>
         <View className="absolute right-0 -top-2 px-2 py-2 bg-[#DAE5F0] rounded-full">
           <MaterialIcons name="tune" size={28} color="#007CEA" />
         </View>
       </View>
+      {/*  MAP COMPONENT */}
+      <View className="h-60   my-2">
+        <Image
+          source={require("../../assets/images/map.png")}
+          className="w-full h-full rounded-xl"
+          resizeMode="cover"
+        />
+      </View>
+      {/* TAB COMPONENT */}
       <View className="flex flex-1">
         <TabView
           navigationState={{ index, routes }}

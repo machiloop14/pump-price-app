@@ -18,6 +18,13 @@ const _layout = () => {
         name="submit"
         options={{
           title: "Submit",
+          headerShown: true,
+          headerTitle: "Submit Price",
+          headerTitleContainerStyle: {
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+          },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle-outline" color={color} size={size} />
           ),

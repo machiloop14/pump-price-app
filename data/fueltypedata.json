@@ -1,0 +1,5 @@
+[
+  { "label": "Petrol", "value": "petrol" },
+  { "label": "Kerosene", "value": "kerosene" },
+  { "label": "Diesel", "value": "diesel" }
+]

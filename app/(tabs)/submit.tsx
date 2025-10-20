@@ -1,6 +1,7 @@
 import DropdownComponent from "@/components/dropdown";
+import FormInput from "@/components/formInput";
 import React from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import dummyState from "../../data/dummystate.json";
 import dummyStations from "../../data/dummystations.json";
@@ -36,22 +37,19 @@ const Submit = () => {
             <Text>Price</Text>
             <Text className="text-red-500 text-lg mt-1">*</Text>
           </View>
-          <View className="">
-            <TextInput
-              className="bg-white rounded-md border border-gray-400 py-4 px-2"
-              placeholder="N0.00"
-              keyboardType="decimal-pad"
-            />
-          </View>
+          <FormInput
+            formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
+            placeholder="N0.00"
+            keyboard="decimal-pad"
+          />
         </View>
         <View className="mb-2">
           <Text>Location</Text>
-          <View className="">
-            <TextInput
-              className="bg-white rounded-md border border-gray-400 py-4 px-2"
-              placeholder="agbowo, opposite ui"
-            />
-          </View>
+          <FormInput
+            formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
+            placeholder="agbowo, opp UI gate"
+            keyboard="default"
+          />
         </View>
         <Pressable className="bg-[#138AEC] py-4 rounded-lg">
           <Text className="text-center text-white">Submit</Text>

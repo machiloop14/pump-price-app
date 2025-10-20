@@ -1,33 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
-import dummydata from "../data/dummydata.json";
-
 import { Station } from "@/types/fuel";
-import PriceReport from "./priceReport";
+import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { Text, View } from "react-native";
 
-const petrolStations: Station[] = dummydata
-  .map((station) => ({
-    ...station,
-    prices: station.prices.filter(
-      (price) => price.fuelType.toLowerCase() === "petrol"
-    ),
-  }))
-  .filter((station) => station.prices.length > 0);
+interface PriceReportProps {
+  priceReport: Station[];
+}
 
-const PetrolTab = () => {
-  const [data, setData] = useState<Station[]>([]);
-
-  useEffect(() => {
-    setData(petrolStations);
-  }, [petrolStations]);
-
+const PriceReport = ({ priceReport }: PriceReportProps) => {
   return (
-    <ScrollView
-      className="flex flex-1 gap-4 mt-4"
-      showsVerticalScrollIndicator={false}
-    >
-      {/* former template - NOT NEEDED ANYMORE */}
-      {/* {data.map((station) => (
+    <View>
+      {priceReport.map((station) => (
         <View
           key={station.stationName}
           className="border-b-[#E0EBF6] border-b py-4"
@@ -79,10 +62,9 @@ const PetrolTab = () => {
             ))}
           </View>
         </View>
-      ))} */}
-      <PriceReport priceReport={data} />
-    </ScrollView>
+      ))}
+    </View>
   );
 };
 
-export default PetrolTab;
+export default PriceReport;

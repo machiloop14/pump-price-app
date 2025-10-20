@@ -33,7 +33,7 @@ const Home = () => {
   const [index, setIndex] = React.useState(0);
   return (
     <SafeAreaView
-      className="flex-1 px-4 bg-white"
+      className="flex-1 px-4 bg-white pb-2"
       edges={["top", "left", "right"]}
     >
       <View className="relative mt-4 mb-6">

@@ -3,22 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import dummydata from "../data/dummydata.json";
 
-//Data structure
-
-type PriceReport = {
-  fuelType: string;
-  price: number;
-  reportedBy: string;
-  likes: number;
-  dislikes: number;
-  timeReported: string;
-};
-
-type Station = {
-  stationName: string;
-  location: string;
-  prices: PriceReport[];
-};
+import { Station } from "@/types/fuel";
 
 const petrolStations: Station[] = dummydata
   .map((station) => ({
@@ -28,8 +13,6 @@ const petrolStations: Station[] = dummydata
     ),
   }))
   .filter((station) => station.prices.length > 0);
-
-console.log(petrolStations);
 
 const PetrolTab = () => {
   const [data, setData] = useState<Station[]>([]);

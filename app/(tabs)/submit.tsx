@@ -10,12 +10,24 @@ import fueltypedata from "../../data/fueltypedata.json";
 const Submit = () => {
   const [price, setPrice] = useState<string>();
   const [location, setLocation] = useState<string>();
+  const [station, setStation] = useState<string>();
+  const [product, setProduct] = useState<string>();
+  const [state, setState] = useState<string>();
 
   const handlePriceInput = (price: string) => {
     setPrice(price);
   };
   const handleLocationInput = (location: string) => {
     setLocation(location);
+  };
+  const handleStationInput = (station: string) => {
+    setStation(station);
+  };
+  const handleProductInput = (product: string) => {
+    setProduct(product);
+  };
+  const handleStateInput = (state: string) => {
+    setState(state);
   };
 
   return (
@@ -26,21 +38,30 @@ const Submit = () => {
             <Text>Fueling Station </Text>
             <Text className="text-red-500 text-lg mt-1.5">*</Text>
           </View>
-          <DropdownComponent dropdownData={dummyStations} />
+          <DropdownComponent
+            dropdownData={dummyStations}
+            handleDropdownInput={handleStationInput}
+          />
         </View>
         <View>
           <View className="flex flex-row gap-2 items-center">
             <Text>Petroleum Product</Text>
             <Text className="text-red-500 text-lg mt-1">*</Text>
           </View>
-          <DropdownComponent dropdownData={fueltypedata} />
+          <DropdownComponent
+            dropdownData={fueltypedata}
+            handleDropdownInput={handleProductInput}
+          />
         </View>
         <View>
           <View className="flex flex-row gap-2 items-center">
             <Text>State</Text>
             <Text className="text-red-500 text-lg mt-1">*</Text>
           </View>
-          <DropdownComponent dropdownData={dummyState} />
+          <DropdownComponent
+            dropdownData={dummyState}
+            handleDropdownInput={handleStateInput}
+          />
         </View>
         <View className="mb-2">
           <View className="flex flex-row gap-2 items-center">
@@ -68,6 +89,9 @@ const Submit = () => {
           onPress={() => {
             console.log(price);
             console.log(location);
+            console.log(station);
+            console.log(product);
+            console.log(state);
           }}
         >
           <Text className="text-center text-white">Submit</Text>

@@ -16,9 +16,13 @@ import { Dropdown } from "react-native-element-dropdown";
 
 interface dropdownDataProps {
   dropdownData: dropdownDataType[];
+  handleDropdownInput: (a: string) => void;
 }
 
-const DropdownComponent = ({ dropdownData }: dropdownDataProps) => {
+const DropdownComponent = ({
+  dropdownData,
+  handleDropdownInput,
+}: dropdownDataProps) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -42,6 +46,7 @@ const DropdownComponent = ({ dropdownData }: dropdownDataProps) => {
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
           setValue(item.value);
+          handleDropdownInput(item.value);
           setIsFocus(false);
         }}
       />

@@ -1,3 +1,4 @@
+import SettingsCard from "@/components/settingsCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
@@ -26,64 +27,62 @@ const Profile = () => {
           <View className="flex gap-6">
             <Text className="font-bold text-2xl">Preferences</Text>
             <View className="flex gap-2">
-              <View className="flex flex-row items-center justify-between bg-white rounded-lg h-16 px-2">
-                <Text>Notifications</Text>
-                <Pressable className="flex flex-row gap-2 items-center">
-                  <MaterialIcons name="toggle-on" color="blue" size={40} />
-                </Pressable>
-              </View>
-              <View className="flex flex-row items-center justify-between bg-white h-16 rounded-lg px-2">
-                <Text>Distance Units</Text>
-                <Pressable className="flex flex-row gap-2 items-center">
-                  <Text className="text-lg text-gray-600">Miles</Text>
-                  <MaterialIcons
-                    name="keyboard-arrow-right"
-                    color="gray"
-                    size={32}
-                  />
-                </Pressable>
-              </View>
-              <View className="flex flex-row items-center justify-between bg-white h-16 rounded-lg px-2">
-                <Text>Distance Units</Text>
-                <Pressable className="flex flex-row gap-2 items-center">
-                  <MaterialIcons
-                    name="keyboard-arrow-right"
-                    color="gray"
-                    size={32}
-                  />
-                </Pressable>
-              </View>
+              <SettingsCard
+                label="Notifications"
+                isIcon={true}
+                isOption={false}
+                iconName="toggle-on"
+                iconSize={40}
+                iconColor="blue"
+              />
+
+              <SettingsCard
+                label="Distance Units"
+                isIcon={true}
+                isOption={true}
+                iconName="keyboard-arrow-right"
+                iconSize={32}
+                iconColor="gray"
+                option="Miles"
+              />
+
+              <SettingsCard
+                label="Privacy Settings"
+                isIcon={true}
+                isOption={false}
+                iconName="keyboard-arrow-right"
+                iconSize={32}
+                iconColor="gray"
+              />
             </View>
           </View>
           <View className="flex gap-6">
             <Text className="font-bold text-2xl">About</Text>
             <View className="flex gap-2">
-              <View className="flex flex-row items-center justify-between bg-white h-16 rounded-lg px-2">
-                <Text>App Version</Text>
-                <Pressable className="flex flex-row gap-2 items-center">
-                  <Text className="text-lg text-gray-600">1.2.3</Text>
-                </Pressable>
-              </View>
-              <View className="flex flex-row items-center justify-between bg-white h-16 rounded-lg px-2">
-                <Text>Terms of Service</Text>
-                <Pressable className="flex flex-row gap-2 items-center">
-                  <MaterialIcons
-                    name="keyboard-arrow-right"
-                    color="gray"
-                    size={32}
-                  />
-                </Pressable>
-              </View>
-              <View className="flex flex-row items-center justify-between bg-white h-16 rounded-lg px-2">
-                <Text>Privacy Policy</Text>
-                <Pressable className="flex flex-row gap-2 items-center">
-                  <MaterialIcons
-                    name="keyboard-arrow-right"
-                    color="gray"
-                    size={32}
-                  />
-                </Pressable>
-              </View>
+              <SettingsCard
+                label="App Version"
+                isIcon={false}
+                isOption={true}
+                option="1.2.3"
+              />
+
+              <SettingsCard
+                label="Terms of Service"
+                isIcon={true}
+                isOption={false}
+                iconName="keyboard-arrow-right"
+                iconSize={32}
+                iconColor="gray"
+              />
+
+              <SettingsCard
+                label="Privacy Policy"
+                isIcon={true}
+                isOption={false}
+                iconName="keyboard-arrow-right"
+                iconSize={32}
+                iconColor="gray"
+              />
             </View>
           </View>
         </View>

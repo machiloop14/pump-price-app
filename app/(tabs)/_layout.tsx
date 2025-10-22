@@ -43,6 +43,13 @@ const _layout = () => {
         name="profile"
         options={{
           title: "Profile",
+          headerShown: true,
+          headerTitle: "Settings",
+          headerTitleContainerStyle: {
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+          },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" color={color} size={size} />
           ),

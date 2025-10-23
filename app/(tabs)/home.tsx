@@ -1,11 +1,23 @@
 import DieselTab from "@/components/dieselTab";
+import DropdownComponent from "@/components/dropdown";
+import FormInput from "@/components/formInput";
 import KeroseneTab from "@/components/keroseneTab";
 import PetrolTab from "@/components/petrolTab";
 import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
-import { Image, Text, useWindowDimensions, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Alert,
+  Image,
+  Modal,
+  Pressable,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+import dummyStates from "../../data/dummystate.json";
+import dummyStations from "../../data/dummystations.json";
 
 const renderScene = SceneMap({
   petrol: PetrolTab,
@@ -31,6 +43,28 @@ const routes = [
 const Home = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [filteredState, setFilteredState] = useState<string>();
+  const [filteredStation, setFilteredStation] = useState<string>();
+  const [minPrice, setMinPrice] = useState<string>();
+  const [maxPrice, setMaxPrice] = useState<string>();
+
+  const handleStateInput = (state: string) => {
+    setFilteredState(state);
+  };
+
+  const handleStationInput = (station: string) => {
+    setFilteredStation(station);
+  };
+
+  const handleMinPriceInput = (price: string) => {
+    setMinPrice(price);
+  };
+
+  const handleMaxPriceInput = (price: string) => {
+    setMaxPrice(price);
+  };
+
   return (
     <SafeAreaView
       className="flex-1 px-4 bg-white pb-2"
@@ -39,9 +73,12 @@ const Home = () => {
       {/* HEADER & FILTER BTN */}
       <View className="relative mt-4 mb-6">
         <Text className="text-center font-bold text-2xl ">Fuel Finder</Text>
-        <View className="absolute right-0 -top-2 px-2 py-2 bg-[#DAE5F0] rounded-full">
+        <Pressable
+          onPress={() => setModalVisible(true)}
+          className="absolute right-0 -top-2 px-2 py-2 bg-[#DAE5F0] rounded-full"
+        >
           <MaterialIcons name="tune" size={28} color="#007CEA" />
-        </View>
+        </Pressable>
       </View>
       {/*  MAP COMPONENT */}
       <View className="h-60   my-2">
@@ -75,6 +112,77 @@ const Home = () => {
           )}
         />
       </View>
+      {/* MODAL COMPONENT */}
+      <Modal
+        animationType="slide"
+        transparent={false}
+        statusBarTranslucent={true}
+        presentationStyle="fullScreen"
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <SafeAreaView className="flex-1 bg-white px-4 pt-4">
+          <View className="flex flex-row justify-between items-center pb-4 border-b border-gray-100">
+            <View className="flex flex-row items-center gap-4 ">
+              <MaterialIcons
+                name="clear"
+                size={32}
+                onPress={() => setModalVisible(!modalVisible)}
+              />
+              <Text className="font-bold text-black text-2xl">
+                Search filters
+              </Text>
+            </View>
+            <Pressable
+              className="bg-black rounded-full"
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text className="text-white px-6 py-2 font-medium text-xl">
+                Apply
+              </Text>
+            </Pressable>
+          </View>
+          <View className="flex gap-6 mt-6">
+            <View>
+              <Text>Fueling Station</Text>
+              <DropdownComponent
+                dropdownData={dummyStations}
+                handleDropdownInput={handleStationInput}
+              />
+            </View>
+            <View>
+              <Text>State</Text>
+              <DropdownComponent
+                dropdownData={dummyStates}
+                handleDropdownInput={handleStateInput}
+              />
+            </View>
+            <View>
+              <Text>Min Price</Text>
+              <FormInput
+                formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
+                placeholder="N0.00"
+                keyboard="decimal-pad"
+                handleFormInput={handleMinPriceInput}
+              />
+            </View>
+            <View>
+              <Text>Max Price</Text>
+              <FormInput
+                formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
+                placeholder="N0.00"
+                keyboard="decimal-pad"
+                handleFormInput={handleMaxPriceInput}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 };

@@ -23,7 +23,7 @@ export default function Index() {
         <View className="flex gap-4 w-full">
           <Pressable
             className="bg-[#138AEC] py-4 rounded-lg"
-            onPress={() => router.replace("/home")}
+            onPress={() => router.push("/login")}
           >
             <Text className="text-center text-white font-bold">Log In</Text>
           </Pressable>

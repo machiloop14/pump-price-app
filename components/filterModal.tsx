@@ -1,83 +1,104 @@
-import React, { useState } from "react";
-import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { Alert, Modal, Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import dummyStates from "../data/dummystate.json";
+import dummyStations from "../data/dummystations.json";
+import DropdownComponent from "./dropdown";
+import FormInput from "./formInput";
 
-const FilterModal = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+interface filterModalProps {
+  handleStationInput: (a: string) => void;
+  handleStateInput: (a: string) => void;
+  handleMinPriceInput: (a: string) => void;
+  handleMaxPriceInput: (a: string) => void;
+  modalVisible: boolean;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  filteredStation: string | undefined;
+}
 
+const FilterModal = ({
+  handleStationInput,
+  handleStateInput,
+  handleMinPriceInput,
+  handleMaxPriceInput,
+  modalVisible,
+  setModalVisible,
+  filteredStation,
+}: filterModalProps) => {
   return (
-    <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
+    <Modal
+      animationType="slide"
+      transparent={false}
+      statusBarTranslucent={true}
+      presentationStyle="fullScreen"
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert("Modal has been closed.");
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <SafeAreaView className="flex-1 bg-white px-4 pt-4">
+        <View className="flex flex-row justify-between items-center pb-4 border-b border-gray-100">
+          <View className="flex flex-row items-center gap-4 ">
+            <MaterialIcons
+              name="clear"
+              size={32}
               onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+            />
+            <Text className="font-bold text-black text-2xl">
+              Search filters
+            </Text>
+          </View>
+          <Pressable
+            className="bg-black rounded-full"
+            onPress={() => {
+              console.log(filteredStation);
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Text className="text-white px-6 py-2 font-medium text-xl">
+              Apply
+            </Text>
+          </Pressable>
+        </View>
+        <View className="flex gap-6 mt-6">
+          <View>
+            <Text>Fueling Station</Text>
+            <DropdownComponent
+              dropdownData={dummyStations}
+              handleDropdownInput={handleStationInput}
+            />
+          </View>
+          <View>
+            <Text>State</Text>
+            <DropdownComponent
+              dropdownData={dummyStates}
+              handleDropdownInput={handleStateInput}
+            />
+          </View>
+          <View>
+            <Text>Min Price</Text>
+            <FormInput
+              formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
+              placeholder="N0.00"
+              keyboard="decimal-pad"
+              handleFormInput={handleMinPriceInput}
+            />
+          </View>
+          <View>
+            <Text>Max Price</Text>
+            <FormInput
+              formClass="bg-white rounded-md border border-gray-400 py-4 px-2"
+              placeholder="N0.00"
+              keyboard="decimal-pad"
+              handleFormInput={handleMaxPriceInput}
+            />
           </View>
         </View>
-      </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
-    </View>
+      </SafeAreaView>
+    </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-});
 
 export default FilterModal;

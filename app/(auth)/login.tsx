@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,7 +21,7 @@ const Login = () => {
           Sign in to continue to Fuel Finder
         </Text>
       </View>
-      <Pressable className="w-full">
+      <Pressable className="w-full" onPress={() => router.push("/home")}>
         <View className="rounded-lg overflow-hidden">
           <LinearGradient
             colors={["#FF6B6B", "#FFD166"]}

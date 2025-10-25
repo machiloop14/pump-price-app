@@ -27,8 +27,13 @@ export default function Index() {
           >
             <Text className="text-center text-white font-bold">Log In</Text>
           </Pressable>
-          <Pressable className="bg-[#111518] py-4 rounded-lg">
-            <Text className="text-center text-white font-bold">Sign Up</Text>
+          <Pressable
+            className="bg-[#111518] py-4 rounded-lg"
+            onPress={() => router.replace("/home")}
+          >
+            <Text className="text-center text-white font-bold">
+              Continue as guest
+            </Text>
           </Pressable>
         </View>
       </View>

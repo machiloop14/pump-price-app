@@ -34,6 +34,13 @@ const _layout = () => {
         name="trends"
         options={{
           title: "Trends",
+          // headerShown: true,
+          // headerTitle: "Price Trends",
+          // headerTitleContainerStyle: {
+          //   display: "flex",
+          //   width: "100%",
+          //   alignItems: "center",
+          // },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="stats-chart-outline" color={color} size={size} />
           ),

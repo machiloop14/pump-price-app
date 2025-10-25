@@ -1,6 +1,6 @@
 import DropdownComponent from "@/components/dropdown";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import dateRangeData from "../../data/dateRange.json";
 import dummyState from "../../data/dummystate.json";
@@ -85,6 +85,23 @@ const Trends = () => {
         >
           <Text className="text-center text-white">Submit</Text>
         </Pressable>
+      </View>
+      <View className="px-4 mt-10">
+        <View className="flex gap-2 mb-2">
+          <Text className=" text-xl text-[#0e141b]">Petrol Price Trend</Text>
+          <View className="flex flex-row gap-1 items-baseline">
+            <Text className="text-3xl font-bold text-[#0e141b">N945.50</Text>
+            <Text>(avg)</Text>
+          </View>
+          <Text className="text-[#4e7397]">Last 30 days</Text>
+        </View>
+        <View className="h-52">
+          <Image
+            source={require("../../assets/images/graph.png")}
+            className="w-full h-full"
+            resizeMode="stretch"
+          />
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Login = () => {
   const [loginEmail, setLoginEmail] = useState<string>();
   const [loginPassword, setLoginPassword] = useState<string>();
+  const [loginConfirmPassword, setLoginConfirmPassword] = useState<string>();
 
   const router = useRouter();
 
@@ -16,9 +17,12 @@ const Login = () => {
   const handleLoginPassword = (password: string) => {
     setLoginPassword(password);
   };
+  const handleLoginConfirmPassword = (password: string) => {
+    setLoginConfirmPassword(password);
+  };
 
   return (
-    <SafeAreaView className="flex flex-1 items-center  gap-10 px-4 bg-white pt-12">
+    <SafeAreaView className="flex flex-1 items-center  gap-10 px-4 bg-white pt-10">
       <View>
         <Image
           source={require("../../assets/images/avatar.jpg")}
@@ -27,9 +31,9 @@ const Login = () => {
         />
       </View>
       <View className="flex gap-4">
-        <Text className="font-bold text-4xl text-center">Welcome Back</Text>
+        <Text className="font-bold text-4xl text-center">Welcome</Text>
         <Text className="text-center text-xl text-gray-500">
-          Sign in to continue to Fuel Finder
+          Sign up to continue to Fuel Finder
         </Text>
       </View>
       <View className=" w-11/12 flex gap-4">
@@ -51,6 +55,15 @@ const Login = () => {
             handleFormInput={handleLoginPassword}
           />
         </View>
+        <View className="mb-2 flex gap-2">
+          <Text className="font-bold">Confirm Password</Text>
+          <FormInput
+            formClass="bg-white rounded-md bg-[#E5E7EB] py-4 px-2"
+            placeholder="Confirm your password"
+            keyboard="default"
+            handleFormInput={handleLoginConfirmPassword}
+          />
+        </View>
       </View>
       <View className="w-11/12 mx-auto">
         <Pressable
@@ -58,16 +71,17 @@ const Login = () => {
           onPress={() => {
             console.log(loginEmail);
             console.log(loginPassword);
+            console.log(loginConfirmPassword);
           }}
         >
-          <Text className="text-center text-white">Log In</Text>
+          <Text className="text-center text-white">Sign Up</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.push("/signup")}
+          onPress={() => router.push("/login")}
           className="flex flex-row gap-2 justify-center mt-2"
         >
-          <Text className="text-center">Don't have an account?</Text>
-          <Text className="text-center text-[#138AEC]">Sign up</Text>
+          <Text className="text-center">Already have an account?</Text>
+          <Text className="text-center text-[#138AEC]">Sign In</Text>
         </Pressable>
       </View>
     </SafeAreaView>

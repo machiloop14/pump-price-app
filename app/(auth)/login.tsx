@@ -1,13 +1,21 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
-import React from "react";
+import FormInput from "@/components/formInput";
+import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
+  const [loginEmail, setLoginEmail] = useState<string>();
+  const [loginPassword, setLoginPassword] = useState<string>();
+
+  const handleLoginEmail = (email: string) => {
+    setLoginEmail(email);
+  };
+  const handleLoginPassword = (password: string) => {
+    setLoginPassword(password);
+  };
+
   return (
-    <SafeAreaView className="flex flex-1 items-center justify-center gap-10 px-4">
+    <SafeAreaView className="flex flex-1 items-center  gap-10 px-4 bg-white pt-12">
       <View>
         <Image
           source={require("../../assets/images/avatar.jpg")}
@@ -21,21 +29,37 @@ const Login = () => {
           Sign in to continue to Fuel Finder
         </Text>
       </View>
-      <Pressable className="w-full" onPress={() => router.push("/home")}>
-        <View className="rounded-lg overflow-hidden">
-          <LinearGradient
-            colors={["#FF6B6B", "#FFD166"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }} // 135° direction equivalent
-            className="px-8 py-6 flex items-center flex-row justify-center gap-4" // padding = border thickness
-          >
-            <MaterialCommunityIcons name="google" size={26} color="white" />
-            <Text className="text-white font-bold text-xl">
-              Sign in with Google
-            </Text>
-          </LinearGradient>
+      <View className=" w-11/12 flex gap-4">
+        <View className="mb-2 flex gap-2">
+          <Text className="font-bold">Email</Text>
+          <FormInput
+            formClass="bg-white rounded-md bg-[#E5E7EB] py-4 px-2"
+            placeholder="Enter your email address"
+            keyboard="default"
+            handleFormInput={handleLoginEmail}
+          />
         </View>
-      </Pressable>
+        <View className="mb-2 flex gap-2">
+          <Text className="font-bold">Password</Text>
+          <FormInput
+            formClass="bg-white rounded-md bg-[#E5E7EB] py-4 px-2"
+            placeholder="Enter your password"
+            keyboard="default"
+            handleFormInput={handleLoginPassword}
+          />
+        </View>
+      </View>
+      <View className="w-11/12">
+        <Pressable
+          className="bg-[#138AEC] py-4 rounded-lg"
+          onPress={() => {
+            console.log(loginEmail);
+            console.log(loginPassword);
+          }}
+        >
+          <Text className="text-center text-white">Log In</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 };

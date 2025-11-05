@@ -1,12 +1,14 @@
 import FormInput from "@/components/formInput";
+import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
-  const [loginEmail, setLoginEmail] = useState<string>();
-  const [loginPassword, setLoginPassword] = useState<string>();
+  const [loginEmail, setLoginEmail] = useState<string>("");
+  const [loginPassword, setLoginPassword] = useState<string>("");
   const [loginConfirmPassword, setLoginConfirmPassword] = useState<string>();
 
   const router = useRouter();
@@ -19,6 +21,15 @@ const Login = () => {
   };
   const handleLoginConfirmPassword = (password: string) => {
     setLoginConfirmPassword(password);
+  };
+
+  const handleSignUp = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
+      router.replace("/(auth)/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -68,11 +79,7 @@ const Login = () => {
       <View className="w-11/12 mx-auto">
         <Pressable
           className="bg-[#138AEC] py-4 rounded-lg"
-          onPress={() => {
-            console.log(loginEmail);
-            console.log(loginPassword);
-            console.log(loginConfirmPassword);
-          }}
+          onPress={handleSignUp}
         >
           <Text className="text-center text-white">Sign Up</Text>
         </Pressable>

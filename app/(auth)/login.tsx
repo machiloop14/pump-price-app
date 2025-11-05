@@ -1,12 +1,14 @@
 import FormInput from "@/components/formInput";
+import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
-  const [loginEmail, setLoginEmail] = useState<string>();
-  const [loginPassword, setLoginPassword] = useState<string>();
+  const [loginEmail, setLoginEmail] = useState<string>("");
+  const [loginPassword, setLoginPassword] = useState<string>("");
 
   const router = useRouter();
 
@@ -15,6 +17,22 @@ const Login = () => {
   };
   const handleLoginPassword = (password: string) => {
     setLoginPassword(password);
+  };
+
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      userCredential.user &&
+        console.log("sign in successful", userCredential.user);
+
+      userCredential.user && router.push("/(tabs)/home");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -55,10 +73,7 @@ const Login = () => {
       <View className="w-11/12 mx-auto">
         <Pressable
           className="bg-[#138AEC] py-4 rounded-lg"
-          onPress={() => {
-            console.log(loginEmail);
-            console.log(loginPassword);
-          }}
+          onPress={handleLogin}
         >
           <Text className="text-center text-white">Log In</Text>
         </Pressable>

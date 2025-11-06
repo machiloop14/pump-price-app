@@ -7,7 +7,12 @@ import dummyState from "../../data/dummystate.json";
 import dummyStations from "../../data/dummystations.json";
 import fueltypedata from "../../data/fueltypedata.json";
 
+import { useAuth } from "@/context/auth";
+import { submitFuelReport } from "../../services/submitFuelReport";
+
 const Submit = () => {
+  const { user } = useAuth();
+
   const [price, setPrice] = useState<string>();
   const [location, setLocation] = useState<string>();
   const [station, setStation] = useState<string>();
@@ -28,6 +33,24 @@ const Submit = () => {
   };
   const handleStateInput = (state: string) => {
     setState(state);
+  };
+
+  const handleSubmit = async () => {
+    if (!station || !product || !state || !price || !location) {
+      console.log("Missing fields");
+      return;
+    }
+
+    await submitFuelReport(
+      station,
+      state,
+      product,
+      Number(price),
+      user?.email || "Anonymous",
+      location
+    );
+
+    console.log("submitted");
   };
 
   return (
@@ -86,13 +109,7 @@ const Submit = () => {
         </View>
         <Pressable
           className="bg-[#138AEC] py-4 rounded-lg"
-          onPress={() => {
-            console.log(price);
-            console.log(location);
-            console.log(station);
-            console.log(product);
-            console.log(state);
-          }}
+          onPress={handleSubmit}
         >
           <Text className="text-center text-white">Submit</Text>
         </Pressable>

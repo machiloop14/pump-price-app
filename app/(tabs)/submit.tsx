@@ -8,9 +8,11 @@ import dummyStations from "../../data/dummystations.json";
 import fueltypedata from "../../data/fueltypedata.json";
 
 import { useAuth } from "@/context/auth";
+import { useAppToast } from "@/hooks/useAppToast";
 import { submitFuelReport } from "../../services/submitFuelReport";
 
 const Submit = () => {
+  const toast = useAppToast();
   const { user } = useAuth();
 
   const [price, setPrice] = useState<string>();
@@ -38,19 +40,26 @@ const Submit = () => {
   const handleSubmit = async () => {
     if (!station || !product || !state || !price || !location) {
       console.log("Missing fields");
+      toast.error("Missing Required Fields");
+
       return;
     }
 
-    await submitFuelReport(
-      station,
-      state,
-      product,
-      Number(price),
-      user?.email || "Anonymous",
-      location
-    );
+    try {
+      await submitFuelReport(
+        station,
+        state,
+        product,
+        Number(price),
+        user?.email || "Anonymous",
+        location
+      );
 
-    console.log("submitted");
+      toast.success("Report Submitted!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to submit report");
+    }
   };
 
   return (

@@ -6,7 +6,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
-  const user = useAuth();
+  const { user } = useAuth();
 
   return (
     <SafeAreaView className="px-4 bg-[#F6F7F8]">
@@ -23,7 +23,7 @@ const Profile = () => {
               </View>
               <View>
                 <Text className="text-lg font-medium">Jennifer Smith</Text>
-                {/* {user && <Text className="text-[#605F68]">{user.email}</Text>} */}
+                {user && <Text className="text-[#605F68]">{user.email}</Text>}
               </View>
             </View>
           </View>

@@ -1,19 +1,21 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { StationData } from "../types/fuel"; // optional if you created types
+import { StationData } from "../types/fuel";
 
-export const fetchAllReports = async (): Promise<StationData[]> => {
-  try {
-    const querySnapshot = await getDocs(collection(db, "stations"));
+export const listenToStations = (
+  callback: (stations: StationData[]) => void
+) => {
+  const stationsRef = collection(db, "stations");
 
-    const stations: StationData[] = [];
-    querySnapshot.forEach((doc) => {
-      stations.push(doc.data() as StationData);
+  // ✅ real-time listener
+  const unsubscribe = onSnapshot(stationsRef, (snapshot) => {
+    const stations: StationData[] = snapshot.docs.map((doc) => {
+      return doc.data() as StationData;
     });
 
-    return stations;
-  } catch (error) {
-    console.error("Error fetching stations: ", error);
-    return [];
-  }
+    callback(stations);
+  });
+
+  // ✅ return unsubscribe so caller can stop listening
+  return unsubscribe;
 };

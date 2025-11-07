@@ -7,7 +7,7 @@ export const listenToStations = (
 ) => {
   const stationsRef = collection(db, "stations");
 
-  // ✅ real-time listener
+  // real-time listener
   const unsubscribe = onSnapshot(stationsRef, (snapshot) => {
     const stations: StationData[] = snapshot.docs.map((doc) => {
       return doc.data() as StationData;
@@ -16,6 +16,6 @@ export const listenToStations = (
     callback(stations);
   });
 
-  // ✅ return unsubscribe so caller can stop listening
+  // return unsubscribe so caller can stop listening
   return unsubscribe;
 };

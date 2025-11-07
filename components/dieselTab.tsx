@@ -1,34 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
-import dummydata from "../data/dummydata.json";
+import React from "react";
+import { ScrollView, Text } from "react-native";
 
-import { Station } from "@/types/fuel";
+import { useFuelReports } from "@/hooks/useFuelReport";
 import PriceReport from "./priceReport";
 
-const dieselStations: Station[] = dummydata
-  .map((station) => ({
-    ...station,
-    prices: station.prices.filter(
-      (price) => price.fuelType.toLowerCase() === "diesel"
-    ),
-  }))
-  .filter((station) => station.prices.length > 0);
+const DieselTab = () => {
+  const { reports, loading } = useFuelReports("diesel");
 
-const KeroseneTab = () => {
-  const [data, setData] = useState<Station[]>([]);
-
-  useEffect(() => {
-    setData(dieselStations);
-  }, [dieselStations]);
-
+  if (loading) return <Text>Loading...</Text>;
   return (
     <ScrollView
       className="flex flex-1 gap-4 mt-4"
       showsVerticalScrollIndicator={false}
     >
-      <PriceReport priceReport={data} />
+      <PriceReport priceReport={reports} />
     </ScrollView>
   );
 };
 
-export default KeroseneTab;
+export default DieselTab;

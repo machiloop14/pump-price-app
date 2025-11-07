@@ -1,10 +1,11 @@
-import { Station } from "@/types/fuel";
+import { timeAgo } from "@/functions/timeAgo";
+import { StationData } from "@/types/fuel";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
 
 interface PriceReportProps {
-  priceReport: Station[];
+  priceReport: StationData[];
 }
 
 const PriceReport = ({ priceReport }: PriceReportProps) => {
@@ -24,8 +25,10 @@ const PriceReport = ({ priceReport }: PriceReportProps) => {
               />
             </View>
             <View>
-              <Text className="font-bold text-xl">{station.stationName}</Text>
-              <Text className="text-[#666D71]">{station.location}</Text>
+              <Text className="font-bold text-xl">
+                {station.stationName.toUpperCase()}
+              </Text>
+              {/* <Text className="text-[#666D71]">{station.location}</Text> */}
             </View>
           </View>
           <View className="flex mt-1">
@@ -38,7 +41,12 @@ const PriceReport = ({ priceReport }: PriceReportProps) => {
                   <Text className="text-[#138AEC] font-bold text-2xl">
                     N{report.price}
                   </Text>
-                  <Text className="text-[#666D71]">{report.timeReported}</Text>
+                  <Text className="text-[#666D71]">
+                    {timeAgo(report.timeReported)}
+                  </Text>
+                  <Text className="text-[#666D71]">
+                    {report.location + ", " + report.state}
+                  </Text>
                 </View>
                 <View className="flex flex-row gap-3">
                   <View className="flex flex-row items-center gap-1 px-3 py-3 bg-[#DEEFE6] rounded-full">

@@ -1,14 +1,15 @@
-export type PriceReport = {
+export type FuelPrice = {
   fuelType: string;
   price: number;
   reportedBy: string;
+  location: string;
+  state: string;
   likes: number;
   dislikes: number;
   timeReported: string;
 };
 
-export type Station = {
+export type StationData = {
   stationName: string;
-  location: string;
-  prices: PriceReport[];
+  prices: FuelPrice[];
 };

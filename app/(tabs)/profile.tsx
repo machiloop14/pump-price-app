@@ -22,7 +22,9 @@ const Profile = () => {
                 />
               </View>
               <View>
-                <Text className="text-lg font-medium">Jennifer Smith</Text>
+                <Text className="text-lg font-medium">
+                  {user?.email?.split("@")[0]}
+                </Text>
                 {user && <Text className="text-[#605F68]">{user.email}</Text>}
               </View>
             </View>

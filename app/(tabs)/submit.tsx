@@ -1,5 +1,6 @@
 import DropdownComponent from "@/components/dropdown";
 import FormInput from "@/components/formInput";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,6 +13,7 @@ import { useAppToast } from "@/hooks/useAppToast";
 import { submitFuelReport } from "../../services/submitFuelReport";
 
 const Submit = () => {
+  const router = useRouter();
   const toast = useAppToast();
   const { user } = useAuth();
 
@@ -56,6 +58,7 @@ const Submit = () => {
       );
 
       toast.success("Report Submitted!");
+      router.replace("/(tabs)/home");
     } catch (err) {
       console.log(err);
       toast.error("Failed to submit report");

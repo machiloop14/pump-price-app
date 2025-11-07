@@ -29,7 +29,7 @@ const Login = () => {
       userCredential.user &&
         console.log("sign in successful", userCredential.user);
 
-      userCredential.user && router.push("/(tabs)/home");
+      userCredential.user && router.replace("/(tabs)/home");
     } catch (error) {
       console.log(error);
     }

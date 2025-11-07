@@ -18,6 +18,7 @@ export const submitFuelReport = async (
       price,
       reportedBy,
       location,
+      state,
       likes: 0,
       dislikes: 0,
       timeReported: new Date().toISOString(),
@@ -32,7 +33,6 @@ export const submitFuelReport = async (
       // ✅ Station does not exist → create it
       await setDoc(stationRef, {
         stationName,
-        state,
         prices: [priceEntry],
       });
     }

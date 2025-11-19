@@ -1,4 +1,5 @@
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import uuid from "react-native-uuid";
 import { db } from "../firebaseConfig";
 
 export const submitFuelReport = async (
@@ -14,13 +15,14 @@ export const submitFuelReport = async (
     const stationSnap = await getDoc(stationRef);
 
     const priceEntry = {
+      id: uuid.v4(),
       fuelType,
       price,
       reportedBy,
       location,
       state,
-      likes: 0,
-      dislikes: 0,
+      likes: [],
+      dislikes: [],
       timeReported: new Date().toISOString(),
     };
 

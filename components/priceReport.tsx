@@ -2,7 +2,7 @@ import { timeAgo } from "@/functions/timeAgo";
 import { StationData } from "@/types/fuel";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 interface PriceReportProps {
   priceReport: StationData[];
@@ -49,22 +49,22 @@ const PriceReport = ({ priceReport }: PriceReportProps) => {
                   </Text>
                 </View>
                 <View className="flex flex-row gap-3">
-                  <View className="flex flex-row items-center gap-1 px-3 py-3 bg-[#DEEFE6] rounded-full">
+                  <Pressable className="flex flex-row items-center gap-1 px-3 py-3 bg-[#DEEFE6] rounded-full">
                     <MaterialIcons
                       name="thumb-up-off-alt"
                       size={18}
                       color="#00BA4C"
                     />
                     <Text className="text-[#00BA4C]">{report.likes}</Text>
-                  </View>
-                  <View className="flex flex-row items-center gap-1 px-3 py-3 bg-[#F3E2E3] rounded-full">
+                  </Pressable>
+                  <Pressable className="flex flex-row items-center gap-1 px-3 py-3 bg-[#F3E2E3] rounded-full">
                     <MaterialIcons
                       name="thumb-down-off-alt"
                       size={18}
                       color="#E74040"
                     />
                     <Text className="text-[#E74040]">{report.dislikes}</Text>
-                  </View>
+                  </Pressable>
                 </View>
               </View>
             ))}

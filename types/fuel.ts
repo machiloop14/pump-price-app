@@ -4,12 +4,13 @@ export type FuelPrice = {
   reportedBy: string;
   location: string;
   state: string;
-  likes: number;
-  dislikes: number;
+  likes: string[];
+  dislikes: string[];
   timeReported: string;
 };
 
 export type StationData = {
+  id: string;
   stationName: string;
   prices: FuelPrice[];
 };

@@ -73,7 +73,11 @@ const PriceReport = ({ priceReport }: PriceReportProps) => {
                       }
                     >
                       <MaterialIcons
-                        name="thumb-up-off-alt"
+                        name={
+                          report.likes.includes(user.uid)
+                            ? "thumb-up-alt"
+                            : "thumb-up-off-alt"
+                        }
                         size={18}
                         color="#00BA4C"
                       />
@@ -88,7 +92,11 @@ const PriceReport = ({ priceReport }: PriceReportProps) => {
                       }
                     >
                       <MaterialIcons
-                        name="thumb-down-off-alt"
+                        name={
+                          report.dislikes.includes(user.uid)
+                            ? "thumb-down-alt"
+                            : "thumb-down-off-alt"
+                        }
                         size={18}
                         color="#E74040"
                       />

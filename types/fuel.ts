@@ -1,4 +1,5 @@
 export type FuelPrice = {
+  id: string;
   fuelType: string;
   price: number;
   reportedBy: string;

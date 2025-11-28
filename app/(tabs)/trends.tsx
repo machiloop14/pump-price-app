@@ -1,4 +1,5 @@
 import DropdownComponent from "@/components/dropdown";
+import MultiSelectComponent from "@/components/multiDropdown";
 import { useFuelTrends } from "@/hooks/useFuelTrend";
 import React, { useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
@@ -61,10 +62,7 @@ const Trends = () => {
             <Text>Fueling Station </Text>
             <Text className="text-red-500 text-lg mt-1.5">*</Text>
           </View>
-          <DropdownComponent
-            dropdownData={dummyStations}
-            handleDropdownInput={handleStationInput}
-          />
+          <MultiSelectComponent dropdownData={dummyStations} />
         </View>
 
         <View>

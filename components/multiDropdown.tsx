@@ -6,12 +6,12 @@ import { MultiSelect } from "react-native-element-dropdown";
 
 interface dropdownDataProps {
   dropdownData: dropdownDataType[];
-  //   handleDropdownInput: (a: string[]) => void;
+  handleDropdownInput: (a: string[]) => void;
 }
 
 const MultiSelectComponent = ({
   dropdownData,
-  //   handleDropdownInput,
+  handleDropdownInput,
 }: dropdownDataProps) => {
   const [selected, setSelected] = useState<string[]>([]);
 
@@ -41,6 +41,7 @@ const MultiSelectComponent = ({
         onChange={(item) => {
           setSelected(item);
           console.log(selected);
+          handleDropdownInput(item);
         }}
         renderLeftIcon={() => (
           <AntDesign

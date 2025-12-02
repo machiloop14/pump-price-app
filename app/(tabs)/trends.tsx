@@ -11,9 +11,11 @@ import dummyStations from "../../data/dummystations.json";
 import fueltypedata from "../../data/fueltypedata.json";
 // import  {useFuelTrends} from "@/hooks/useFuelTrend"
 
+const colors = ["#138AEC", "#FF5733", "#1FBF54", "#FFB300", "#8E44AD"];
+
 const Trends = () => {
   const [product, setProduct] = useState<string>();
-  const [station, setStation] = useState<string>();
+  const [stations, setStations] = useState<string[]>();
   const [stateLoc, setStateLoc] = useState<string>();
   const [dateRange, setDateRange] = useState<number>();
   const [submitted, setSubmitted] = useState(false);
@@ -22,8 +24,8 @@ const Trends = () => {
     setProduct(product);
   };
 
-  const handleStationInput = (station: string) => {
-    setStation(station);
+  const handleStationInput = (stations: string[]) => {
+    setStations(stations);
   };
   const handleStateInput = (stateLoc: string) => {
     setStateLoc(stateLoc);
@@ -32,13 +34,24 @@ const Trends = () => {
     setDateRange(Number(dateRange));
   };
 
-  const { data, avgPrice, loading } = useFuelTrends(
+  const { data, loading } = useFuelTrends(
     product,
-    station,
+    stations,
     stateLoc,
     dateRange,
     submitted
   );
+
+  const lineDataSets = Array(5)
+    .fill(undefined)
+    .map((_, i) => {
+      if (!data[i]) return undefined;
+      return data[i].series.map((p: any) => ({
+        value: p.price,
+        dataPointText: `${p.price}`,
+        label: p.date.slice(5),
+      }));
+    });
 
   return (
     <SafeAreaView
@@ -62,7 +75,10 @@ const Trends = () => {
             <Text>Fueling Station </Text>
             <Text className="text-red-500 text-lg mt-1.5">*</Text>
           </View>
-          <MultiSelectComponent dropdownData={dummyStations} />
+          <MultiSelectComponent
+            dropdownData={dummyStations}
+            handleDropdownInput={handleStationInput}
+          />
         </View>
 
         <View>
@@ -114,29 +130,35 @@ const Trends = () => {
               </Text>
               <View className="flex flex-row items-baseline gap-1">
                 <Text className="text-3xl font-bold text-[#0e141b]">
-                  N{avgPrice}
+                  avgprice
                 </Text>
                 <Text>(avg)</Text>
               </View>
-              <Text className="text-[#4e7397]">
-                Last {dateRange} days — {station}
-              </Text>
+              <Text className="text-[#4e7397]">Last {dateRange} days</Text>
             </View>
 
             <LineChart
-              data={data.map((d) => ({
-                value: d.price,
-                label: d.date.slice(5),
-              }))}
-              width={350}
-              height={220}
-              curved
-              thickness={3}
-              spacing={40}
-              initialSpacing={20}
-              color="#138AEC"
-              yAxisTextStyle={{ color: "#4e7397" }}
-              xAxisLabelTextStyle={{ color: "#4e7397" }}
+              data={lineDataSets[0]}
+              data2={lineDataSets[1]}
+              data3={lineDataSets[2]}
+              data4={lineDataSets[3]}
+              data5={lineDataSets[4]}
+              height={250}
+              showVerticalLines
+              spacing={44}
+              initialSpacing={0}
+              color1={colors[0]}
+              color2={colors[1]}
+              color3={colors[2]}
+              color4={colors[3]}
+              color5={colors[4]}
+              dataPointsHeight={6}
+              dataPointsWidth={6}
+              dataPointsColor1={colors[0]}
+              dataPointsColor2={colors[1]}
+              dataPointsColor3={colors[2]}
+              dataPointsColor4={colors[3]}
+              dataPointsColor5={colors[4]}
             />
           </View>
         )}

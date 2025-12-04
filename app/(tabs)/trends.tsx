@@ -135,12 +135,6 @@ const Trends = () => {
                 <Text className="text-xl text-[#0e141b]">
                   {product} price trend
                 </Text>
-                {/* <View className="flex flex-row items-baseline gap-1">
-                  <Text className="text-3xl font-bold text-[#0e141b]">
-                    avgprice
-                  </Text>
-                  <Text>(avg)</Text>
-                </View> */}
                 <Text className="text-[#4e7397]">Last {dateRange} days</Text>
               </View>
 

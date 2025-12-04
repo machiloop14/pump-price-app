@@ -35,6 +35,7 @@ export const useFuelTrends = (
 
           const filtered = station.prices.filter(
             (p) =>
+              p.status?.toLowerCase() === "valid" &&
               p.fuelType.toLowerCase() === fuelType.toLowerCase() &&
               p.state.toLowerCase() === stateLoc.toLowerCase() &&
               dayjs(p.timeReported).isAfter(dayjs().subtract(days, "day"))

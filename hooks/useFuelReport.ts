@@ -16,7 +16,9 @@ export const useFuelReports = (fuelType?: string) => {
           .map((station) => ({
             ...station,
             prices: station.prices.filter(
-              (price) => price.fuelType.toLowerCase() === fuelType.toLowerCase()
+              (price) =>
+                price.fuelType.toLowerCase() === fuelType.toLowerCase() &&
+                price.status?.toLowerCase() === "valid"
             ),
           }))
           .filter((station) => station.prices.length > 0);

@@ -8,6 +8,8 @@ export type FuelPrice = {
   likes: string[];
   dislikes: string[];
   timeReported: string;
+  trustScore: number;
+  status: string;
 };
 
 export type StationData = {

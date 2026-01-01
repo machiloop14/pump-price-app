@@ -1,16 +1,27 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { Report } from "../types/GooglePlace";
 
-export async function fetchReportsForStation(
-  placeId: string
-): Promise<Report[]> {
+/**
+ * Sets up a real-time listener for a station's reports
+ * @param placeId Google Place ID of the station
+ * @param callback Called whenever reports change
+ * @returns unsubscribe function
+ */
+export function listenToReportsForStation(
+  placeId: string,
+  callback: (reports: Report[]) => void
+) {
   const reportsRef = collection(db, "stationss", placeId, "reports");
   const q = query(reportsRef, orderBy("submittedAt", "desc"));
-  const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Omit<Report, "id">),
-  }));
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const reports: Report[] = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as Omit<Report, "id">),
+    }));
+    callback(reports);
+  });
+
+  return unsubscribe;
 }

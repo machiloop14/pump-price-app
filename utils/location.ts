@@ -1,4 +1,18 @@
-// utils/location.ts
+// // utils/location.ts
+// import * as Location from "expo-location";
+
+// export async function getCurrentLocation() {
+//   const { status } = await Location.requestForegroundPermissionsAsync();
+
+//   if (status !== "granted") {
+//     throw new Error("Location permission denied");
+//   }
+
+//   const location = await Location.getCurrentPositionAsync({});
+//   return location.coords;
+// }
+// src/utils/location.ts
+
 import * as Location from "expo-location";
 
 export async function getCurrentLocation() {
@@ -8,6 +22,9 @@ export async function getCurrentLocation() {
     throw new Error("Location permission denied");
   }
 
-  const location = await Location.getCurrentPositionAsync({});
+  const location = await Location.getCurrentPositionAsync({
+    accuracy: Location.Accuracy.High,
+  });
+
   return location.coords;
 }

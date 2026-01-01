@@ -19,6 +19,9 @@ export default function StationCard({ station }: Props) {
       {station.opening_hours && (
         <Text>{station.opening_hours.open_now ? "Open now" : "Closed"}</Text>
       )}
+      {station.distanceKm !== undefined && (
+        <Text>{station.distanceKm.toFixed(2)} km away</Text>
+      )}
     </View>
   );
 }

@@ -40,6 +40,22 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
+        name="report"
+        options={{
+          title: "Submit",
+          headerShown: true,
+          headerTitle: "Submit Price",
+          headerTitleContainerStyle: {
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="trends"
         options={{
           title: "Trends",

@@ -15,6 +15,15 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
+        name="homepage"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="submit"
         options={{
           title: "Submit",

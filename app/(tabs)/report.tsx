@@ -84,6 +84,7 @@
 import React, { useState } from "react";
 import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { useAuth } from "@/context/auth";
 import FuelSelector from "../../components/fuelSelector";
 import StationSearchInput from "../../components/stationSearchInput";
 import { fetchPlaceDetails } from "../../services/placeDetails";
@@ -91,11 +92,15 @@ import { FuelType } from "../../types/fuels";
 import { StationSearchResult } from "../../types/stationSearchResult";
 import { extractState } from "../../utils/extractState";
 
+import { submitReport } from "../../services/reportService";
+
 export default function SubmitPriceScreen() {
   const [station, setStation] = useState<StationSearchResult | null>(null);
   const [stateName, setStateName] = useState<string | null>(null);
   const [fuelType, setFuelType] = useState<FuelType | null>(null);
   const [price, setPrice] = useState("");
+
+  const { user } = useAuth();
 
   const handleSelectStation = async (selected: StationSearchResult) => {
     setStation(selected);
@@ -110,27 +115,57 @@ export default function SubmitPriceScreen() {
     }
   };
 
-  const handleSubmit = () => {
+  //   const handleSubmit = () => {
+  //     if (!station || !fuelType || !price || !stateName) {
+  //       Alert.alert("Missing data", "Please complete all fields");
+  //       return;
+  //     }
+
+  //     const payload = {
+  //       placeId: station.place_id,
+  //       stationName: station.name,
+  //       latitude: station.geometry.location.lat,
+  //       longitude: station.geometry.location.lng,
+  //       address: station.formatted_address,
+  //       state: stateName,
+  //       fuelType,
+  //       price: Number(price),
+  //       submittedAt: new Date().toISOString(),
+  //     };
+
+  //     console.log("Submitting:", payload);
+
+  //     Alert.alert("Success", "Price submitted successfully(mock)");
+  //   };
+
+  const handleSubmit = async () => {
     if (!station || !fuelType || !price || !stateName) {
       Alert.alert("Missing data", "Please complete all fields");
       return;
     }
 
-    const payload = {
-      placeId: station.place_id,
-      stationName: station.name,
-      latitude: station.geometry.location.lat,
-      longitude: station.geometry.location.lng,
-      address: station.formatted_address,
-      state: stateName,
-      fuelType,
-      price: Number(price),
-      submittedAt: new Date().toISOString(),
-    };
+    if (!user) return;
 
-    console.log("Submitting:", payload);
+    try {
+      await submitReport(user.uid, {
+        placeId: station.place_id,
+        stationName: station.name,
+        state: stateName,
+        address: station.formatted_address,
+        lat: station.geometry.location.lat,
+        lng: station.geometry.location.lng,
+        fuelType,
+        price: Number(price),
+      });
 
-    Alert.alert("Success", "Price submitted successfully(mock)");
+      alert("Report submitted successfully");
+      setStation(null);
+      setFuelType(null);
+      setPrice("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit report");
+    }
   };
 
   return (

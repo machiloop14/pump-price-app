@@ -1,46 +1,150 @@
+// import React, { useState } from "react";
+// import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+
+// import FuelSelector from "../../components/fuelSelector";
+// import StationSearchInput from "../../components/stationSearchInput";
+// import { FuelType } from "../../types/fuels";
+// import { StationSearchResult } from "../../types/stationSearchResult";
+
+// export default function SubmitPriceScreen() {
+//   const [station, setStation] = useState<StationSearchResult | null>(null);
+//   const [fuelType, setFuelType] = useState<FuelType | null>(null);
+//   const [price, setPrice] = useState("");
+
+//   const handleSubmit = () => {
+//     if (!station || !fuelType || !price) {
+//       Alert.alert("Missing data", "Please complete all fields");
+//       return;
+//     }
+
+//     console.log(station);
+
+//     const payload = {
+//       placeId: station.place_id,
+//       stationName: station.name,
+//       lat: station.geometry.location.lat,
+//       lng: station.geometry.location.lng,
+//       address: station.formatted_address,
+//       fuelType,
+//       price: Number(price),
+//       submittedAt: new Date().toISOString(),
+//     };
+
+//     console.log("Submitting price:", payload);
+
+//     Alert.alert("Success", "Price submitted (mock)");
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Submit Fuel Price</Text>
+
+//       <StationSearchInput onSelect={setStation} />
+
+//       {station && <Text style={styles.selected}>Selected: {station.name}</Text>}
+
+//       <FuelSelector value={fuelType} onChange={setFuelType} />
+
+//       <TextInput
+//         placeholder="Enter price (₦)"
+//         keyboardType="numeric"
+//         value={price}
+//         onChangeText={setPrice}
+//         style={styles.input}
+//       />
+
+//       <Button title="Submit Price" onPress={handleSubmit} />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 16,
+//     flex: 1,
+//   },
+//   title: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//     marginBottom: 12,
+//   },
+//   selected: {
+//     marginVertical: 8,
+//     fontStyle: "italic",
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: "#ccc",
+//     padding: 12,
+//     borderRadius: 6,
+//     marginBottom: 16,
+//   },
+// });
+
 import React, { useState } from "react";
 import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 import FuelSelector from "../../components/fuelSelector";
 import StationSearchInput from "../../components/stationSearchInput";
+import { fetchPlaceDetails } from "../../services/placeDetails";
 import { FuelType } from "../../types/fuels";
 import { StationSearchResult } from "../../types/stationSearchResult";
+import { extractState } from "../../utils/extractState";
 
 export default function SubmitPriceScreen() {
   const [station, setStation] = useState<StationSearchResult | null>(null);
+  const [stateName, setStateName] = useState<string | null>(null);
   const [fuelType, setFuelType] = useState<FuelType | null>(null);
   const [price, setPrice] = useState("");
 
+  const handleSelectStation = async (selected: StationSearchResult) => {
+    setStation(selected);
+
+    try {
+      const details = await fetchPlaceDetails(selected.place_id);
+      const state = extractState(details.address_components);
+      setStateName(state);
+    } catch (err) {
+      console.error("Failed to fetch place details", err);
+      setStateName(null);
+    }
+  };
+
   const handleSubmit = () => {
-    if (!station || !fuelType || !price) {
+    if (!station || !fuelType || !price || !stateName) {
       Alert.alert("Missing data", "Please complete all fields");
       return;
     }
 
-    console.log(station);
-
     const payload = {
       placeId: station.place_id,
       stationName: station.name,
-      lat: station.geometry.location.lat,
-      lng: station.geometry.location.lng,
+      latitude: station.geometry.location.lat,
+      longitude: station.geometry.location.lng,
+      address: station.formatted_address,
+      state: stateName,
       fuelType,
       price: Number(price),
       submittedAt: new Date().toISOString(),
     };
 
-    console.log("Submitting price:", payload);
+    console.log("Submitting:", payload);
 
-    Alert.alert("Success", "Price submitted (mock)");
+    Alert.alert("Success", "Price submitted successfully(mock)");
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Submit Fuel Price</Text>
 
-      <StationSearchInput onSelect={setStation} />
+      <StationSearchInput onSelect={handleSelectStation} />
 
-      {station && <Text style={styles.selected}>Selected: {station.name}</Text>}
+      {station && (
+        <>
+          <Text style={styles.selected}>Station: {station.name}</Text>
+          {stateName && <Text style={styles.state}>State: {stateName}</Text>}
+        </>
+      )}
 
       <FuelSelector value={fuelType} onChange={setFuelType} />
 
@@ -59,23 +163,36 @@ export default function SubmitPriceScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     flex: 1,
+    padding: 16,
+    backgroundColor: "#fff",
   },
+
   title: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 12,
   },
+
   selected: {
-    marginVertical: 8,
+    marginTop: 8,
+    fontSize: 14,
     fontStyle: "italic",
+    color: "#333",
   },
+
+  state: {
+    marginTop: 4,
+    fontSize: 14,
+    color: "#555",
+  },
+
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 12,
     borderRadius: 6,
-    marginBottom: 16,
+    padding: 12,
+    marginVertical: 12,
+    fontSize: 16,
   },
 });

@@ -1,6 +1,7 @@
 // import React, { useEffect, useState } from "react";
 // import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 
+// import FuelTabs, { FuelType } from "../../components/fuelTabs";
 // import StationCard from "../../components/stationCard";
 // import { fetchNearbyGasStations } from "../../services/googlePlaces";
 // import { listenToReportsForStation } from "../../services/reportQueries";
@@ -15,20 +16,18 @@
 //   const [loading, setLoading] = useState(true);
 //   const [loadingMore, setLoadingMore] = useState(false);
 
+//   const [selectedFuel, setSelectedFuel] = useState<FuelType>("petrol");
+
 //   const [userLocation, setUserLocation] = useState<{
 //     latitude: number;
 //     longitude: number;
 //   } | null>(null);
 
-//   useEffect(() => {
-//     loadInitialStations();
-//   }, []);
-
-//   // Hold unsubscribe functions for Firestore listeners
 //   const listenersRef = React.useRef<(() => void)[]>([]);
 
 //   useEffect(() => {
-//     // Clean up listeners on unmount
+//     loadInitialStations();
+
 //     return () => {
 //       listenersRef.current.forEach((unsub) => unsub());
 //       listenersRef.current = [];
@@ -47,15 +46,14 @@
 
 //       const enriched = addDistanceAndSort(data.results, coords);
 
-//       // Attach Firestore listeners
-//       const stationsWithListeners = enriched.map((place) => ({
+//       const withReports = enriched.map((place) => ({
 //         ...place,
 //         reports: [],
 //       }));
-//       setStations(stationsWithListeners);
 
-//       // attach real-time report listeners
-//       stationsWithListeners.forEach((station) => {
+//       setStations(withReports);
+
+//       withReports.forEach((station) => {
 //         const unsubscribe = listenToReportsForStation(
 //           station.place_id,
 //           (reports) => {
@@ -66,6 +64,7 @@
 //             );
 //           }
 //         );
+
 //         listenersRef.current.push(unsubscribe);
 //       });
 
@@ -88,27 +87,20 @@
 //       undefined,
 //       nextPageToken
 //     );
+
 //     const enriched = addDistanceAndSort(data.results, userLocation);
 
-//     const stationsWithListeners = enriched.map((place) => ({
-//       ...place,
-//       reports: [],
-//     }));
+//     const withReports = enriched.map((p) => ({ ...p, reports: [] }));
 
 //     setStations((prev) => {
 //       const map = new Map(prev.map((p) => [p.place_id, p]));
-//       stationsWithListeners.forEach((p) => map.set(p.place_id, p));
+//       withReports.forEach((p) => map.set(p.place_id, p));
 //       return Array.from(map.values()).sort(
 //         (a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0)
 //       );
 //     });
 
-//     // Attach listeners for newly loaded stations
-//     stationsWithListeners.forEach((station) => {
-//       // Skip if already has a listener
-//       if (listenersRef.current.some((_) => _.toString() === station.place_id))
-//         return;
-
+//     withReports.forEach((station) => {
 //       const unsubscribe = listenToReportsForStation(
 //         station.place_id,
 //         (reports) => {
@@ -127,20 +119,19 @@
 //   };
 
 //   if (loading) {
-//     return (
-//       <ActivityIndicator
-//         size="large"
-//         style={{ flex: 1, justifyContent: "center" }}
-//       />
-//     );
+//     return <ActivityIndicator size="large" style={{ flex: 1 }} />;
 //   }
 
 //   return (
 //     <View style={styles.container}>
+//       <FuelTabs selected={selectedFuel} onChange={setSelectedFuel} />
+
 //       <FlatList
 //         data={stations}
 //         keyExtractor={(item) => item.place_id}
-//         renderItem={({ item }) => <StationCard station={item} />}
+//         renderItem={({ item }) => (
+//           <StationCard station={item} selectedFuel={selectedFuel} />
+//         )}
 //         onEndReached={loadMoreStations}
 //         onEndReachedThreshold={0.6}
 //         ListFooterComponent={loadingMore ? <ActivityIndicator /> : null}
@@ -149,9 +140,6 @@
 //   );
 // }
 
-// /**
-//  * Adds distance (km) to each station and sorts ascending
-//  */
 // function addDistanceAndSort(
 //   places: GooglePlace[],
 //   userLocation: { latitude: number; longitude: number }
@@ -175,8 +163,15 @@
 //     padding: 16,
 //   },
 // });
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+} from "react-native";
 
 import FuelTabs, { FuelType } from "../../components/fuelTabs";
 import StationCard from "../../components/stationCard";
@@ -194,13 +189,14 @@ export default function HomeScreen() {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const [selectedFuel, setSelectedFuel] = useState<FuelType>("petrol");
+  const [showOnlyWithReports, setShowOnlyWithReports] = useState(false);
 
   const [userLocation, setUserLocation] = useState<{
     latitude: number;
     longitude: number;
   } | null>(null);
 
-  const listenersRef = React.useRef<(() => void)[]>([]);
+  const listenersRef = useRef<(() => void)[]>([]);
 
   useEffect(() => {
     loadInitialStations();
@@ -257,7 +253,7 @@ export default function HomeScreen() {
     if (!nextPageToken || loadingMore || !userLocation) return;
 
     setLoadingMore(true);
-    await delay(2000);
+    await delay(1500);
 
     const data = await fetchNearbyGasStations(
       undefined,
@@ -266,7 +262,6 @@ export default function HomeScreen() {
     );
 
     const enriched = addDistanceAndSort(data.results, userLocation);
-
     const withReports = enriched.map((p) => ({ ...p, reports: [] }));
 
     setStations((prev) => {
@@ -295,16 +290,37 @@ export default function HomeScreen() {
     setLoadingMore(false);
   };
 
+  /**
+   * FILTERED STATIONS
+   */
+  const filteredStations = useMemo(() => {
+    if (!showOnlyWithReports) return stations;
+
+    return stations.filter(
+      (s) => Array.isArray(s.reports) && s.reports.length > 0
+    );
+  }, [stations, showOnlyWithReports]);
+
   if (loading) {
     return <ActivityIndicator size="large" style={{ flex: 1 }} />;
   }
 
   return (
     <View style={styles.container}>
+      {/* Fuel Tabs */}
       <FuelTabs selected={selectedFuel} onChange={setSelectedFuel} />
 
+      {/* Filter Toggle */}
+      <View style={styles.filterRow}>
+        <Text style={styles.filterText}>Show only stations with prices</Text>
+        <Switch
+          value={showOnlyWithReports}
+          onValueChange={setShowOnlyWithReports}
+        />
+      </View>
+
       <FlatList
-        data={stations}
+        data={filteredStations}
         keyExtractor={(item) => item.place_id}
         renderItem={({ item }) => (
           <StationCard station={item} selectedFuel={selectedFuel} />
@@ -338,5 +354,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+
+  filterRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+
+  filterText: {
+    fontSize: 14,
+    fontWeight: "500",
   },
 });

@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
+  Image,
+  StatusBar,
   StyleSheet,
   Switch,
   Text,
@@ -143,12 +145,15 @@ export default function HomeScreen() {
     });
   }, [stations, showOnlyWithReports, selectedFuel]);
 
-  if (loading) {
-    return <ActivityIndicator size="large" style={{ flex: 1 }} />;
-  }
-
   return (
     <View style={styles.container}>
+      <View className="h-44 mb-2">
+        <Image
+          source={require("../../assets/images/map.png")}
+          className="w-full h-full rounded-xl"
+          resizeMode="cover"
+        />
+      </View>
       {/* Fuel Tabs */}
       <FuelTabs selected={selectedFuel} onChange={setSelectedFuel} />
 
@@ -161,6 +166,8 @@ export default function HomeScreen() {
         />
       </View>
 
+      {loading && <ActivityIndicator size="large" style={{ flex: 1 }} />}
+
       <FlatList
         data={filteredStations}
         keyExtractor={(item) => item.place_id}
@@ -171,6 +178,7 @@ export default function HomeScreen() {
         onEndReachedThreshold={0.6}
         ListFooterComponent={loadingMore ? <ActivityIndicator /> : null}
       />
+      <StatusBar backgroundColor="black" />
     </View>
   );
 }
@@ -196,6 +204,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "#f7fafc",
   },
 
   filterRow: {

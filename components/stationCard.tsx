@@ -16,8 +16,13 @@ export default function StationCard({ station, selectedFuel }: Props) {
   const { user } = useAuth();
   const userId = user?.uid;
 
+  // const filteredReports =
+  //   station.reports?.filter((r) => r.fuelType === selectedFuel) ?? [];
+
   const filteredReports =
-    station.reports?.filter((r) => r.fuelType === selectedFuel) ?? [];
+    station.reports?.filter(
+      (r) => r.fuelType === selectedFuel && r.trustStatus === "valid"
+    ) ?? [];
 
   const handleLike = (report: Report) => {
     if (!userId) return;

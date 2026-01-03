@@ -69,6 +69,8 @@ export interface Report {
   likes: string[];
   dislikes: string[];
   submittedAt: any;
+  trustScore: number;
+  trustStatus: "valid" | "suspicious" | "rejected";
 }
 
 export interface GooglePlace {

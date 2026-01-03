@@ -1,18 +1,38 @@
 import SettingsCard from "@/components/settingsCard";
 import { useAuth } from "@/context/auth";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    Alert.alert("Sign out", "Are you sure you want to sign out?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Sign out",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await logout();
+            router.replace("/(auth)");
+          } catch (err) {
+            console.error(err);
+          }
+        },
+      },
+    ]);
+  };
 
   return (
     <SafeAreaView className="px-4 bg-[#F6F7F8]">
-      <View>
+      <ScrollView>
         <View className="flex gap-8">
-          <View className="flex gap-6">
+          <View className="flex gap-2">
             <Text className="font-bold text-2xl">Account</Text>
             <View className="flex flex-row gap-4 items-center">
               <View className="w-16 h-16">
@@ -91,11 +111,14 @@ const Profile = () => {
             </View>
           </View>
         </View>
-        <Pressable className="flex flex-row gap-3 items-center justify-center mt-5">
+        <Pressable
+          className="flex flex-row gap-3 items-center justify-center mt-5"
+          onPress={handleLogout}
+        >
           <MaterialIcons name="logout" color="#0000F0" size={20} />
           <Text className="text-lg">Sign out</Text>
         </Pressable>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -43,7 +43,7 @@ export default function StationCard({ station, selectedFuel }: Props) {
             <MaterialIcons name="local-gas-station" color="#007CEA" size={24} />
           </View>
           <View className="flex flex-1 gap-1 ">
-            <Text className="font-bold text-base">{station.name}</Text>
+            <Text className=" text-base font-poppins-bold">{station.name}</Text>
             {/* <View className="text-wrap "> */}
             {/* {station.distanceKm !== undefined && (
                 <Text className="text-xs text-gray-500">
@@ -51,7 +51,10 @@ export default function StationCard({ station, selectedFuel }: Props) {
                 </Text>
               )} */}
             {station.vicinity && (
-              <Text className="text-xs text-gray-500 text-wrap">
+              <Text
+                className="text-xs text-gray-500 text-wrap font-poppins"
+                // style={{ fontFamily: "Inter_700Bold" }}
+              >
                 {station.vicinity}
               </Text>
             )}
@@ -60,7 +63,7 @@ export default function StationCard({ station, selectedFuel }: Props) {
         </View>
         <View>
           {station.distanceKm !== undefined && (
-            <Text className="text-md text-gray-500 font-bold">
+            <Text className="text-md text-gray-500 font-poppins-bold">
               {station.distanceKm.toFixed(2)} km
             </Text>
           )}
@@ -84,9 +87,9 @@ export default function StationCard({ station, selectedFuel }: Props) {
               className="flex flex-row items-center justify-between"
             >
               <View>
-                <Text style={{ fontWeight: "600" }}>₦{report.price}</Text>
+                <Text className="font-poppins-semibold">₦{report.price}</Text>
                 {/* Time ago */}
-                <Text style={styles.time}>
+                <Text style={styles.time} className="font-poppins">
                   Reported {timeAgo(report.submittedAt)}
                 </Text>
               </View>
@@ -105,7 +108,7 @@ export default function StationCard({ station, selectedFuel }: Props) {
                     size={14}
                     color="#00BA4C"
                   />
-                  <Text className="text-[#00BA4C] text-sm">
+                  <Text className="text-[#00BA4C] text-sm font-poppins">
                     {report.likes.length}
                   </Text>
                 </TouchableOpacity>
@@ -123,7 +126,7 @@ export default function StationCard({ station, selectedFuel }: Props) {
                     size={14}
                     color="#E74040"
                   />
-                  <Text className="text-[#E74040] text-sm">
+                  <Text className="text-[#E74040] text-sm font-poppins">
                     {report.dislikes.length}
                   </Text>
                 </TouchableOpacity>
@@ -132,7 +135,9 @@ export default function StationCard({ station, selectedFuel }: Props) {
           ))}
         </View>
       ) : (
-        <Text className="pt-4 pb-6 text-gray-500">No prices reported</Text>
+        <Text className="pt-4 pb-6 text-gray-500 font-poppins">
+          No prices reported
+        </Text>
       )}
     </View>
   );

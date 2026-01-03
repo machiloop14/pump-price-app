@@ -6,7 +6,7 @@ export default function Index() {
   const router = useRouter();
   return (
     <SafeAreaView>
-      <View className="h-full flex gap-10 items-center justify-center w-10/12 mx-auto">
+      <View className="h-full flex gap-10 items-center justify-center w-10/12 mx-auto font-sans">
         <View className="h-96 w-full">
           <Image
             source={require("../../assets/images/welcome.png")}

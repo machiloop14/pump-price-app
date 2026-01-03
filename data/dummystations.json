@@ -1,5 +1,6 @@
 [
   { "label": "NNPC", "value": "nnpc" },
+  { "label": "Fortress", "value": "fortress" },
   { "label": "TotalEnergies", "value": "totalenergies" },
   { "label": "Mobil", "value": "mobil" },
   { "label": "Conoil", "value": "conoil" },

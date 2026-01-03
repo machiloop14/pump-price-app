@@ -75,7 +75,7 @@ export default function SubmitPriceScreen() {
       await submitReport(user.uid, {
         placeId: station.place_id,
         stationName: station.name,
-        state: stateName,
+        state: stateName.toLowerCase(), //DEBUG: possible error
         address: station.formatted_address,
         lat: station.geometry.location.lat,
         lng: station.geometry.location.lng,

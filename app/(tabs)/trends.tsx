@@ -1,6 +1,6 @@
 import DropdownComponent from "@/components/dropdown";
 import MultiSelectComponent from "@/components/multiDropdown";
-import { useFuelTrends } from "@/hooks/useFuelTrend";
+import { useFuelTrends } from "@/hooks/useFuelTrends";
 import React, { useState } from "react";
 import {
   ActivityIndicator,

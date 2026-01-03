@@ -16,7 +16,9 @@ export default function FuelSelector({ value, onChange }: Props) {
           style={[styles.button, value === fuel && styles.active]}
           onPress={() => onChange(fuel)}
         >
-          <Text style={styles.text}>{FUEL_LABELS[fuel]}</Text>
+          <Text style={[styles.text, value === fuel && styles.activeText]}>
+            {FUEL_LABELS[fuel]}
+          </Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -26,20 +28,25 @@ export default function FuelSelector({ value, onChange }: Props) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    justifyContent: "center",
     gap: 10,
     marginVertical: 12,
   },
   button: {
     padding: 12,
     borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    backgroundColor: "#e9f2ff",
   },
   active: {
-    backgroundColor: "#dbeafe",
-    borderColor: "#3b82f6",
+    color: "#fff",
+    backgroundColor: "#0a66ff",
   },
   text: {
     fontWeight: "500",
+    color: "#99a8bc",
+    fontSize: 12,
+  },
+  activeText: {
+    color: "#fff",
   },
 });

@@ -1,6 +1,8 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -37,17 +39,25 @@ export default function StationSearchInput({ onSelect }: Props) {
 
   return (
     <View>
-      <TextInput
-        placeholder="Search gas station..."
-        value={query}
-        onChangeText={setQuery}
-        style={styles.input}
-      />
+      <View className="flex flex-row items-center bg-white py-1 rounded-full px-2">
+        <MaterialIcons name="location-pin" color="green" size={30} />
+        <TextInput
+          placeholder="Search gas station..."
+          value={query}
+          onChangeText={setQuery}
+          className="flex flex-1"
+        />
+        <Pressable onPress={() => setQuery("")}>
+          <MaterialIcons name="clear" size={20} color="black" />
+        </Pressable>
+      </View>
 
       {results.length > 0 && (
         <FlatList
           data={results}
           keyExtractor={(item) => item.place_id}
+          className="bg-white mt-0"
+          contentContainerStyle={{ gap: 1 }}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.item}
@@ -55,10 +65,16 @@ export default function StationSearchInput({ onSelect }: Props) {
                 onSelect(item);
                 setQuery(item.name);
                 setResults([]);
+                setQuery(""); // DEBUG: possible error
               }}
             >
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.address}>{item.formatted_address}</Text>
+              <View className="flex flex-row items-center gap-2">
+                <MaterialIcons name="location-pin" size={32} color="gray" />
+                <View>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.address}>{item.formatted_address}</Text>
+                </View>
+              </View>
             </TouchableOpacity>
           )}
         />
@@ -77,11 +93,12 @@ const styles = StyleSheet.create({
   },
   item: {
     paddingVertical: 10,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: "#eee",
   },
   name: {
     fontWeight: "600",
+    fontSize: 14,
   },
   address: {
     color: "#666",

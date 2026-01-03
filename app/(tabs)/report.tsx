@@ -1,88 +1,13 @@
-// import React, { useState } from "react";
-// import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
-
-// import FuelSelector from "../../components/fuelSelector";
-// import StationSearchInput from "../../components/stationSearchInput";
-// import { FuelType } from "../../types/fuels";
-// import { StationSearchResult } from "../../types/stationSearchResult";
-
-// export default function SubmitPriceScreen() {
-//   const [station, setStation] = useState<StationSearchResult | null>(null);
-//   const [fuelType, setFuelType] = useState<FuelType | null>(null);
-//   const [price, setPrice] = useState("");
-
-//   const handleSubmit = () => {
-//     if (!station || !fuelType || !price) {
-//       Alert.alert("Missing data", "Please complete all fields");
-//       return;
-//     }
-
-//     console.log(station);
-
-//     const payload = {
-//       placeId: station.place_id,
-//       stationName: station.name,
-//       lat: station.geometry.location.lat,
-//       lng: station.geometry.location.lng,
-//       address: station.formatted_address,
-//       fuelType,
-//       price: Number(price),
-//       submittedAt: new Date().toISOString(),
-//     };
-
-//     console.log("Submitting price:", payload);
-
-//     Alert.alert("Success", "Price submitted (mock)");
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Submit Fuel Price</Text>
-
-//       <StationSearchInput onSelect={setStation} />
-
-//       {station && <Text style={styles.selected}>Selected: {station.name}</Text>}
-
-//       <FuelSelector value={fuelType} onChange={setFuelType} />
-
-//       <TextInput
-//         placeholder="Enter price (₦)"
-//         keyboardType="numeric"
-//         value={price}
-//         onChangeText={setPrice}
-//         style={styles.input}
-//       />
-
-//       <Button title="Submit Price" onPress={handleSubmit} />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     padding: 16,
-//     flex: 1,
-//   },
-//   title: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     marginBottom: 12,
-//   },
-//   selected: {
-//     marginVertical: 8,
-//     fontStyle: "italic",
-//   },
-//   input: {
-//     borderWidth: 1,
-//     borderColor: "#ccc",
-//     padding: 12,
-//     borderRadius: 6,
-//     marginBottom: 16,
-//   },
-// });
-
 import React, { useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 import { useAuth } from "@/context/auth";
 import FuelSelector from "../../components/fuelSelector";
@@ -168,39 +93,61 @@ export default function SubmitPriceScreen() {
     }
   };
 
+  const image = require("../../assets/images/mapview.jpg");
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Submit Fuel Price</Text>
+    <View className="flex-1">
+      <ImageBackground source={image} resizeMode="cover" className="flex-1">
+        <View
+          style={styles.container}
+          className="bg-[#f7fbff] flex gap-3 w-11/12 mx-auto mt-3 elevation-md  rounded-lg"
+        >
+          <View>
+            <StationSearchInput onSelect={handleSelectStation} />
 
-      <StationSearchInput onSelect={handleSelectStation} />
+            {station && (
+              <View>
+                <Text style={styles.selected} className="font-semibold text-sm">
+                  {station.name}
+                </Text>
+                <Text style={styles.state} className=" italic  tex">
+                  {station.formatted_address}
+                </Text>
+              </View>
+            )}
+          </View>
 
-      {station && (
-        <>
-          <Text style={styles.selected}>Station: {station.name}</Text>
-          {stateName && <Text style={styles.state}>State: {stateName}</Text>}
-        </>
-      )}
+          <FuelSelector value={fuelType} onChange={setFuelType} />
 
-      <FuelSelector value={fuelType} onChange={setFuelType} />
-
-      <TextInput
-        placeholder="Enter price (₦)"
-        keyboardType="numeric"
-        value={price}
-        onChangeText={setPrice}
-        style={styles.input}
-      />
-
-      <Button title="Submit Price" onPress={handleSubmit} />
+          <TextInput
+            placeholder="Enter price (₦)"
+            keyboardType="numeric"
+            value={price}
+            onChangeText={setPrice}
+            style={styles.input}
+          />
+          <View>
+            <Pressable
+              onPress={handleSubmit}
+              className="bg-[#0a66ff] px-2 py-3 rounded-md "
+            >
+              <Text className="text-center text-white font-medium">
+                Submit Report
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    shadowColor: "#000",
+    // backgroundColor: "#fff",
   },
 
   title: {
@@ -218,13 +165,14 @@ const styles = StyleSheet.create({
 
   state: {
     marginTop: 4,
-    fontSize: 14,
-    color: "#555",
+    fontSize: 12,
+    color: "#99a8bc",
   },
 
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#e4e7eb",
+    backgroundColor: "#f7fbff",
     borderRadius: 6,
     padding: 12,
     marginVertical: 12,

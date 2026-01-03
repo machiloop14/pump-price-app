@@ -6,11 +6,13 @@ import { Dropdown } from "react-native-element-dropdown";
 interface dropdownDataProps {
   dropdownData: dropdownDataType[];
   handleDropdownInput: (a: string) => void;
+  placeholder?: string;
 }
 
 const DropdownComponent = ({
   dropdownData,
   handleDropdownInput,
+  placeholder,
 }: dropdownDataProps) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -28,7 +30,7 @@ const DropdownComponent = ({
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? "Select item" : "..."}
+        placeholder={!isFocus ? placeholder || "Select item" : "..."}
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}
@@ -68,12 +70,15 @@ const styles = StyleSheet.create({
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
+    fontFamily: "Poppins_400Regular",
   },
   placeholderStyle: {
     fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
   selectedTextStyle: {
     fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
   iconStyle: {
     width: 20,
@@ -82,5 +87,6 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
 });

@@ -7,11 +7,13 @@ import { MultiSelect } from "react-native-element-dropdown";
 interface dropdownDataProps {
   dropdownData: dropdownDataType[];
   handleDropdownInput: (a: string[]) => void;
+  placeholder?: string;
 }
 
 const MultiSelectComponent = ({
   dropdownData,
   handleDropdownInput,
+  placeholder,
 }: dropdownDataProps) => {
   const [selected, setSelected] = useState<string[]>([]);
 
@@ -34,7 +36,7 @@ const MultiSelectComponent = ({
         data={dropdownData}
         labelField="label"
         valueField="value"
-        placeholder="Select item"
+        placeholder={placeholder || "select item"}
         value={selected}
         search
         searchPlaceholder="Search..."
@@ -89,9 +91,11 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
   selectedTextStyle: {
     fontSize: 14,
+    fontFamily: "Poppins_400Regular",
   },
   iconStyle: {
     width: 20,
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
   icon: {
     marginRight: 5,

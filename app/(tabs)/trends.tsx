@@ -61,52 +61,61 @@ const Trends = () => {
 
   return (
     <SafeAreaView
-      className="bg-white flex flex-1 pt-1.5"
-      // edges={["top", "left", "right"]}
+      className="flex flex-1 bg-[#f7fbff]"
+      edges={["top", "left", "right"]}
     >
+      {/* <ImageBackground
+        source={require("../../assets/images/mapview.jpg")}
+        resizeMode="cover"
+        className="flex-1"
+      > */}
       <ScrollView>
         <View className="pt-2 flex gap-1.5 px-4">
           <View>
-            <View className="flex flex-row gap-2 items-center">
-              <Text>Fuel Type</Text>
-              <Text className="text-red-500 text-lg mt-1.5">*</Text>
-            </View>
+            {/* <View className="flex flex-row gap-2 items-center">
+                <Text>Fuel Type</Text>
+                <Text className="text-red-500 text-lg mt-1.5">*</Text>
+              </View> */}
             <DropdownComponent
               dropdownData={fueltypedata}
               handleDropdownInput={handleProductInput}
+              placeholder="Fuel type"
             />
           </View>
 
           <View>
-            <View className="flex flex-row gap-2 items-center">
-              <Text>Fueling Station </Text>
-              <Text className="text-red-500 text-lg mt-1.5">*</Text>
-            </View>
+            {/* <View className="flex flex-row gap-2 items-center">
+                <Text>Fueling Station </Text>
+                <Text className="text-red-500 text-lg mt-1.5">*</Text>
+              </View> */}
             <MultiSelectComponent
               dropdownData={dummyStations}
               handleDropdownInput={handleStationInput}
+              placeholder="Select stations"
             />
           </View>
 
           <View>
-            <View className="flex flex-row gap-2 items-center">
-              <Text>State</Text>
-              <Text className="text-red-500 text-lg mt-1">*</Text>
-            </View>
+            {/* <View className="flex flex-row gap-2 items-center">
+                <Text>State</Text>
+                <Text className="text-red-500 text-lg mt-1">*</Text>
+              </View> */}
             <DropdownComponent
               dropdownData={dummyState}
               handleDropdownInput={handleStateInput}
+              placeholder="Location"
             />
           </View>
 
           <View>
-            <View className="flex flex-row gap-2 items-center">
-              <Text>Date Range</Text>
-              <Text className="text-red-500 text-lg mt-1">*</Text>
-            </View>
+            {/* <View className="flex flex-row gap-2 items-center">
+                <Text>Date Range</Text>
+                <Text className="text-red-500 text-lg mt-1">*</Text>
+              </View> */}
             <DropdownComponent
               dropdownData={dateRangeData}
               handleDropdownInput={handleDateRangeInput}
+              placeholder="Date range"
             />
           </View>
 
@@ -118,24 +127,26 @@ const Trends = () => {
           </Pressable>
         </View>
 
-        <View className="px-4 mt-10">
+        <View className="px-4 mt-6">
           {!submitted ? (
-            <Text className="text-center text-gray-500">
+            <Text className="text-center text-gray-500 font-poppins">
               Select filters & press submit to view trends.
             </Text>
           ) : loading ? (
             <ActivityIndicator size="large" color="#138AEC" />
           ) : data.length === 0 ? (
-            <Text className="text-center text-gray-500">
+            <Text className="text-center text-gray-500 font-poppins">
               No price reports found for this selection.
             </Text>
           ) : (
             <View>
               <View className="flex gap-2 mb-2">
-                <Text className="text-xl text-[#0e141b]">
+                <Text className="text-xl text-[#0e141b] font-poppins">
                   {product} price trend
                 </Text>
-                <Text className="text-[#4e7397]">Last {dateRange} days</Text>
+                <Text className="text-[#4e7397] font-poppins">
+                  Last {dateRange} days
+                </Text>
               </View>
 
               <LineChart
@@ -180,11 +191,12 @@ const Trends = () => {
                   borderRadius: 2,
                 }}
               />
-              <Text>{st}</Text>
+              <Text className="font-poppins">{st}</Text>
             </View>
           ))}
         </View>
       </ScrollView>
+      {/* </ImageBackground> */}
     </SafeAreaView>
   );
 };

@@ -3,7 +3,7 @@ import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Alert, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
@@ -20,6 +20,11 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
+    if (!loginEmail || !loginPassword) {
+      Alert.alert("Missing Field(s)", "All fields are required");
+      return;
+    }
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,

@@ -3,7 +3,7 @@ import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Alert, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
@@ -24,6 +24,11 @@ const Login = () => {
   };
 
   const handleSignUp = async () => {
+    if (!loginEmail || !loginPassword || !loginConfirmPassword) {
+      Alert.alert("Missing Field(s)", "All fields are required");
+      return;
+    }
+
     try {
       await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
       router.replace("/(auth)/login");

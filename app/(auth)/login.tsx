@@ -67,6 +67,7 @@ const Login = () => {
             placeholder="Enter your password"
             keyboard="default"
             handleFormInput={handleLoginPassword}
+            passwordField={true}
           />
         </View>
       </View>

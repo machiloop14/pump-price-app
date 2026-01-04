@@ -6,6 +6,7 @@ interface formInputProps {
   placeholder: string;
   keyboard: KeyboardTypeOptions;
   handleFormInput: (a: string) => void;
+  passwordField?: boolean;
 }
 
 const FormInput = ({
@@ -13,8 +14,10 @@ const FormInput = ({
   placeholder,
   keyboard,
   handleFormInput,
+  passwordField = false,
 }: formInputProps) => {
   const [input, setInput] = useState<string>("");
+  console.log(passwordField);
 
   const handleTextChange = (text: string) => {
     setInput(text);
@@ -25,10 +28,13 @@ const FormInput = ({
   return (
     <View className="">
       <TextInput
+        value={input}
         className={formClass}
         placeholder={placeholder}
         keyboardType={keyboard}
         onChangeText={handleTextChange}
+        secureTextEntry={passwordField}
+        textContentType={passwordField ? "password" : "none"}
       />
     </View>
   );

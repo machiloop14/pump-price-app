@@ -63,6 +63,7 @@ const Login = () => {
             formClass="bg-white rounded-md bg-[#E5E7EB] py-4 px-2"
             placeholder="Enter your password"
             keyboard="default"
+            passwordField={true}
             handleFormInput={handleLoginPassword}
           />
         </View>
@@ -72,6 +73,7 @@ const Login = () => {
             formClass="bg-white rounded-md bg-[#E5E7EB] py-4 px-2"
             placeholder="Confirm your password"
             keyboard="default"
+            passwordField={true}
             handleFormInput={handleLoginConfirmPassword}
           />
         </View>

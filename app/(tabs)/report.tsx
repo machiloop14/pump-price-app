@@ -17,6 +17,8 @@ import { FuelType } from "../../types/fuels";
 import { StationSearchResult } from "../../types/stationSearchResult";
 import { extractState } from "../../utils/extractState";
 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { submitReport } from "../../services/reportService";
 
 export default function SubmitPriceScreen() {
@@ -26,6 +28,7 @@ export default function SubmitPriceScreen() {
   const [price, setPrice] = useState("");
 
   const { user } = useAuth();
+  const router = useRouter();
 
   const handleSelectStation = async (selected: StationSearchResult) => {
     setStation(selected);
@@ -98,45 +101,71 @@ export default function SubmitPriceScreen() {
   return (
     <View className="flex-1">
       <ImageBackground source={image} resizeMode="cover" className="flex-1">
-        <View
-          style={styles.container}
-          className="bg-[#f7fbff] flex gap-3 w-11/12 mx-auto mt-3 elevation-md  rounded-lg"
-        >
-          <View>
-            <StationSearchInput onSelect={handleSelectStation} />
+        {user ? (
+          <View
+            style={styles.container}
+            className="bg-[#f7fbff] flex gap-3 w-11/12 mx-auto mt-3 elevation-md  rounded-lg"
+          >
+            <View>
+              <StationSearchInput onSelect={handleSelectStation} />
 
-            {station && (
-              <View>
-                <Text style={styles.selected} className="font-semibold text-sm">
-                  {station.name}
+              {station && (
+                <View>
+                  <Text
+                    style={styles.selected}
+                    className="font-semibold text-sm"
+                  >
+                    {station.name}
+                  </Text>
+                  <Text style={styles.state} className=" italic  tex">
+                    {station.formatted_address}
+                  </Text>
+                </View>
+              )}
+            </View>
+
+            <FuelSelector value={fuelType} onChange={setFuelType} />
+
+            <TextInput
+              placeholder="Enter price (₦)"
+              keyboardType="numeric"
+              value={price}
+              onChangeText={setPrice}
+              style={styles.input}
+            />
+            <View>
+              <Pressable
+                onPress={handleSubmit}
+                className="bg-[#0a66ff] px-2 py-3 rounded-md "
+              >
+                <Text className="text-center text-white font-medium">
+                  Submit Report
                 </Text>
-                <Text style={styles.state} className=" italic  tex">
-                  {station.formatted_address}
+              </Pressable>
+            </View>
+          </View>
+        ) : (
+          <View className=" flex flex-1 justify-center">
+            <View className="bg-white py-4 px-4 gap-2">
+              <View className="flex items-center flex-row gap-2">
+                <MaterialCommunityIcons
+                  name="alert-circle"
+                  color="red"
+                  size={32}
+                />
+                <Text className="font-poppins-medium">
+                  You need to log in to access this feature
                 </Text>
               </View>
-            )}
+              <Pressable
+                className="bg-blue-500 px-8 py-2 rounded-md self-center "
+                onPress={() => router.push("/(auth)/login")}
+              >
+                <Text className="text-white font-poppins">Log In</Text>
+              </Pressable>
+            </View>
           </View>
-
-          <FuelSelector value={fuelType} onChange={setFuelType} />
-
-          <TextInput
-            placeholder="Enter price (₦)"
-            keyboardType="numeric"
-            value={price}
-            onChangeText={setPrice}
-            style={styles.input}
-          />
-          <View>
-            <Pressable
-              onPress={handleSubmit}
-              className="bg-[#0a66ff] px-2 py-3 rounded-md "
-            >
-              <Text className="text-center text-white font-medium">
-                Submit Report
-              </Text>
-            </Pressable>
-          </View>
-        </View>
+        )}
       </ImageBackground>
     </View>
   );

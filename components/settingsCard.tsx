@@ -10,6 +10,7 @@ interface ProfilePageProps {
   iconColor?: string;
   iconSize?: number;
   option?: string;
+  onHandlePress?: () => void;
 }
 
 const SettingsCard = ({
@@ -20,12 +21,18 @@ const SettingsCard = ({
   iconColor,
   iconSize,
   option,
+  onHandlePress,
 }: ProfilePageProps) => {
   return (
     <View className="flex flex-row items-center justify-between bg-white rounded-lg h-16 px-2">
-      <Text>{label}</Text>
-      <Pressable className="flex flex-row gap-2 items-center">
-        {isOption && <Text className="text-lg text-gray-600">{option}</Text>}
+      <Text className="font-poppins">{label}</Text>
+      <Pressable
+        className="flex flex-row gap-2 items-center"
+        onPress={onHandlePress}
+      >
+        {isOption && (
+          <Text className="text-lg text-gray-600 font-poppins">{option}</Text>
+        )}
         {isIcon && (
           <MaterialIcons name={iconName} color={iconColor} size={iconSize} />
         )}

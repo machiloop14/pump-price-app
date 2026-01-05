@@ -5,7 +5,7 @@ import React from "react";
 const _layout = () => {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="home"
         options={{
           title: "Home",
@@ -13,7 +13,7 @@ const _layout = () => {
             <Ionicons name="home-outline" color={color} size={size} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="homepage"
         options={{
@@ -23,7 +23,7 @@ const _layout = () => {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="submit"
         options={{
           title: "Submit",
@@ -38,7 +38,7 @@ const _layout = () => {
             <Ionicons name="add-circle-outline" color={color} size={size} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="report"
         options={{
@@ -75,7 +75,7 @@ const _layout = () => {
         name="profile"
         options={{
           title: "Profile",
-          headerShown: true,
+          headerShown: false,
           headerTitle: "Settings",
           headerTitleContainerStyle: {
             display: "flex",

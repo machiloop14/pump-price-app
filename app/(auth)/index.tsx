@@ -15,9 +15,9 @@ export default function Index() {
           />
         </View>
         <View className="flex items-center">
-          <Text className="font-bold text-3xl">Compare Petrol Prices</Text>
+          <Text className="font-bold text-3xl">Compare Pump Prices</Text>
           <Text className="text-xl text-center mt-2 text-[#111518/80]">
-            Find the best petrol prices near you and submit new prices
+            Find the best fuel prices near you and submit new prices
           </Text>
         </View>
         <View className="flex gap-4 w-full">

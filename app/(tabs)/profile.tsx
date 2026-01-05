@@ -35,7 +35,7 @@ const Profile = () => {
       <ScrollView>
         <View className="flex gap-8">
           {user ? (
-            <View className="flex gap-4">
+            <View className="flex gap-4 mt-6">
               <Text className="font-bold text-2xl">Account</Text>
               <View className="flex flex-row gap-4 items-center">
                 <View className="w-16 h-16">

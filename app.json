@@ -24,7 +24,8 @@
         }
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.hsodiq514.pumppriceapp"
     },
     "web": {
       "output": "static",
@@ -49,6 +50,18 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ff53876d-e2bd-42ac-9bfe-79a30a883f96"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ff53876d-e2bd-42ac-9bfe-79a30a883f96"
     }
   }
 }

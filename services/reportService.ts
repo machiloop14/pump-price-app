@@ -54,6 +54,7 @@ import {
 
 import { db } from "../firebaseConfig";
 import { CreateReportInput } from "../types/report";
+import { isPriceWithinRange } from "../utils/fuelPriceRanges";
 import { computeTrustScore } from "../utils/trustscoring";
 import { fetchRecentPricesForTrust } from "./reportQueries";
 
@@ -89,8 +90,15 @@ export async function submitReport(userId: string, data: CreateReportInput) {
     const result = computeTrustScore(data.price, submittedAt, recentPrices);
     trustScore = result.trustScore;
     trustStatus = result.trustStatus;
-  }
+  } else {
+    // 🔹 Cold start fallback
+    const isReasonable = isPriceWithinRange(data.fuelType, data.price);
 
+    if (!isReasonable) {
+      trustScore = 0.4; // Suspicious band
+      trustStatus = "suspicious";
+    }
+  }
   // 3️⃣ Save report
   const reportsRef = collection(stationRef, "reports");
 

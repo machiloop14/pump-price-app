@@ -15,7 +15,7 @@ const _layout = () => {
         }}
       /> */}
       <Tabs.Screen
-        name="homepage"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (

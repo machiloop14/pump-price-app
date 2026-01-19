@@ -130,9 +130,22 @@ const Profile = () => {
                   )
                 }
               />
+
+              {user && user.email == "hamidusodiq2@gmail.com" && (
+                <SettingsCard
+                  label="Admin Page"
+                  isIcon={true}
+                  isOption={false}
+                  iconName="keyboard-arrow-right"
+                  iconSize={32}
+                  iconColor="gray"
+                  onHandlePress={() => router.push("/screens/admins")}
+                />
+              )}
             </View>
           </View>
         </View>
+
         {user ? (
           <Pressable
             className="flex flex-row gap-3 items-center justify-center mt-5"

@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import { useAuth } from "@/context/auth";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { approveReport, rejectReport } from "../../services/adminReportActions";
 import {
   FlaggedReport,
@@ -17,6 +18,8 @@ import {
 export default function FlaggedReportsScreen() {
   const [reports, setReports] = useState<FlaggedReport[]>([]);
   const { user } = useAuth();
+
+  const inset = useSafeAreaInsets();
 
   useEffect(() => {
     const unsub = listenToFlaggedReports(setReports);
@@ -36,17 +39,27 @@ export default function FlaggedReportsScreen() {
   console.log(reports);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        padding: 16,
+        backgroundColor: "#f7fbff",
+        paddingTop: inset.top + 10,
+      }}
+    >
       <Text style={styles.title}>Flagged Reports</Text>
 
       <FlatList
         data={reports}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <View style={styles.card} className="gap-3">
             <View style={styles.header}>
-              <Text style={styles.station}>{item.stationAddress}</Text>
+              <Text style={styles.station} className="flex-1">
+                {item.stationName} . {item.stationAddress}
+              </Text>
               <Text
+                className="max-h-9"
                 style={[
                   styles.badge,
                   item.trustStatus === "suspicious"
@@ -58,7 +71,10 @@ export default function FlaggedReportsScreen() {
               </Text>
             </View>
 
-            <Text style={styles.price}>
+            <Text
+              style={styles.price}
+              className="bg-slate-50 px-2 py-2 rounded-lg"
+            >
               {item.fuelType.toUpperCase()} — ₦{item.price}/L
             </Text>
 
@@ -89,11 +105,6 @@ export default function FlaggedReportsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "#f7fbff",
-  },
   title: {
     fontSize: 20,
     fontWeight: "bold",
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   station: {
-    fontWeight: "600",
+    fontWeight: "400",
   },
   badge: {
     paddingHorizontal: 10,

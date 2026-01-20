@@ -131,7 +131,7 @@ const Profile = () => {
                 }
               />
 
-              {user && user.email == "hamidusodiq2@gmail.com" && (
+              {user && user.uid == "EG3WuI0kKrVurCDjrCJmP0wuwSu2" && (
                 <SettingsCard
                   label="Admin Page"
                   isIcon={true}

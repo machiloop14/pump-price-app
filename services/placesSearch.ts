@@ -1,5 +1,5 @@
 import axios from "axios";
-import { StationSearchResult } from "../types/stationSearchResult";
+import { StationSearchResult } from "../types/StationSearchResult";
 
 const API_KEY = "AIzaSyBe-E5Chhe9sjZodUcWHvlIjTLzArGG_T0";
 

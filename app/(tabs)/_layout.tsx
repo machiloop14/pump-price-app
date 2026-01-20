@@ -5,15 +5,6 @@ import React from "react";
 const _layout = () => {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
-      {/* <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" color={color} size={size} />
-          ),
-        }}
-      /> */}
       <Tabs.Screen
         name="home"
         options={{
@@ -23,22 +14,7 @@ const _layout = () => {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="submit"
-        options={{
-          title: "Submit",
-          headerShown: true,
-          headerTitle: "Submit Price",
-          headerTitleContainerStyle: {
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="add-circle-outline" color={color} size={size} />
-          ),
-        }}
-      /> */}
+
       <Tabs.Screen
         name="report"
         options={{
@@ -59,13 +35,6 @@ const _layout = () => {
         name="trends"
         options={{
           title: "Trends",
-          // headerShown: true,
-          // headerTitle: "Price Trends",
-          // headerTitleContainerStyle: {
-          //   display: "flex",
-          //   width: "100%",
-          //   alignItems: "center",
-          // },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="stats-chart-outline" color={color} size={size} />
           ),

@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { searchStations } from "../services/placesSearch";
-import { StationSearchResult } from "../types/stationSearchResult";
+import { StationSearchResult } from "../types/StationSearchResult";
 
 interface Props {
   onSelect: (station: StationSearchResult) => void;

@@ -1,50 +1,227 @@
-# Welcome to your Expo app 👋
+# Fuel Price Monitoring & Comparison App (FuelSmart NG)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+FuelSmart NG is a **crowdsourced mobile application** built with **React Native (TypeScript)**, **Firebase**, and **Google Maps/Places APIs** to help users discover nearby fuel stations, report fuel prices, and compare prices across locations in Nigeria.
+The system incorporates a **trust scoring algorithm** and **administrative moderation** to improve the reliability of user-submitted data.
 
-## Get started
+---
 
-1. Install dependencies
+## 📱 Features
 
-   ```bash
-   npm install
-   ```
+### User Features
 
-2. Start the app
+- 📍 **Nearby Fuel Stations**
+  - Fetches nearby stations based on the user’s current GPS location using Google Places API
+  - Distance calculation and sorting by proximity
 
-   ```bash
-   npx expo start
-   ```
+- ⛽ **Fuel Price Reporting**
+  - Users can report prices for:
+    - Petrol (PMS)
+    - Diesel (AGO)
+    - Kerosene (DPK)
 
-In the output, you'll find options to open the app in a
+  - Station search powered by Google Places
+  - Automatic state extraction from place details
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- 📊 **Price Display & Filtering**
+  - View reported prices per station
+  - Toggle between fuel types using tabs
+  - Filter stations with or without reported prices
+  - “Reported X mins ago” timestamp display
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- 👍👎 **Community Feedback**
+  - Like and dislike reports
+  - One vote per user per report
 
-## Get a fresh project
+- 🔐 **Authentication**
+  - Email/password authentication using Firebase Auth
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
+### Trust & Reliability Features
+
+- 🧠 **Trust Scoring Algorithm**
+  - Detects outliers using mean and standard deviation
+  - Classifies reports as:
+    - `valid`
+    - `suspicious`
+    - `rejected`
+
+  - Cold-start fallback using domain-specific fuel price ranges
+
+- 📈 **Chart Visualization**
+  - Visualizes historical price trends per station and fuel type
+  - Helps users identify price fluctuations over time
+
+---
+
+### Admin Features
+
+- 🛡 **Admin Review Dashboard**
+  - View all reports flagged as `suspicious` or `rejected`
+  - Approve or reject reports manually
+  - Real-time updates using Firestore listeners
+
+- 🔎 **Moderation Support**
+  - Review reports across all stations using Firestore `collectionGroup` queries
+  - Station details dynamically fetched for review context
+
+---
+
+## 🧱 Tech Stack
+
+### Frontend
+
+- **React Native**
+- **TypeScript**
+- **Expo**
+- **NativeWind / StyleSheet**
+- **React Navigation**
+
+### Backend & Services
+
+- **Firebase Authentication**
+- **Cloud Firestore**
+- **Google Maps SDK**
+- **Google Places API**
+
+---
+
+## 🗂 Project Structure (Simplified)
+
+```
+src/
+├── app/
+│   ├── index.tsx            # Home screen (nearby stations)
+│   ├── report.tsx      # Submit price screen
+│   └── screens/
+│       └── admins.tsx
+│
+├── components/
+│   ├── StationCard.tsx
+│   ├── FuelSelector.tsx
+│   └── StationSearchInput.tsx
+│
+├── services/
+│   ├── googlePlaces.ts
+│   ├── placeDetails.ts
+│   ├── reportService.ts
+│   ├── reportQueries.ts
+│   ├── adminReportQueries.ts
+│   └── adminReportActions.ts
+│
+├── utils/
+│   ├── distance.ts
+│   ├── delay.ts
+│   ├── extractState.ts
+│   ├── trustscoring.ts
+│   └── fuelPriceRanges.ts
+│
+├── types/
+│   ├── GooglePlace.ts
+│   ├── report.ts
+│   └── fuels.ts
+│
+└── firebaseConfig.ts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🧠 Trust Scoring Algorithm (Summary)
 
-To learn more about developing your project with Expo, look at the following resources:
+Each price report is evaluated using:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- **Outlier detection** (mean ± threshold × standard deviation)
+- **Domain-specific fuel price bounds** (cold start handling)
 
-## Join the community
+Reports are classified as:
 
-Join our community of developers creating universal apps.
+- **Valid**
+- **Suspicious**
+- **Rejected**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This hybrid approach combines statistical analysis with domain knowledge and human moderation.
+
+---
+
+## 🗃 Data Model Overview
+
+### Core Entities
+
+- **User** – authenticated via Firebase Auth
+- **Station** – identified by Google Place ID
+- **PriceReport** – fuel price submissions with trust metadata
+- **PriceChart** – derived visualization entity
+
+Firestore Structure:
+
+```
+stationss/
+  └── {stationId}/
+      ├── station fields
+      └── reports/
+          └── {reportId}
+```
+
+---
+
+## 🔐 Security & Access Control
+
+- Firebase Authentication for user identity
+- Firestore Security Rules:
+  - Only authenticated users can submit reports
+  - Only admins can approve/reject flagged reports
+
+- Admin role enforced via custom claims
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js
+- Expo CLI
+- Firebase project
+- Google Cloud project with:
+  - Maps SDK (Android)
+  - Places API
+
+### Installation
+
+```bash
+git clone https://github.com/your-username/fuelsmart-ng.git
+cd fuelsmart-ng
+npm install
+```
+
+### Environment Setup
+
+Create a `.env` file and add:
+
+```
+GOOGLE_MAPS_API_KEY=your_api_key
+```
+
+Configure Firebase in `firebaseConfig.ts`.
+
+### Run the App
+
+```bash
+npx expo start
+```
+
+---
+
+## 📌 Future Improvements
+
+- User reputation system
+- State-specific price range adaptation
+- Offline report caching
+- Advanced analytics dashboard
+- Automated anomaly detection using ML
+
+---
+
+## 📄 License
+
+This project is for academic and educational purposes.
